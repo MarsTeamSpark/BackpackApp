@@ -3,19 +3,18 @@
   "version": "1.0.0",
   "description": "A travel app that aids with safety considerations",
   "main": "index.js",
-  
-    "scripts": {
-      "start": "nodemon server",
-      "dev": "webpack --mode=development",
-      "lint": "eslint . --ext .js --ext .jsx",
-      "lint:fix": "eslint . --fix --ext .js --ext .jsx"
-    },
-    "husky": {
-      "hooks": {
-        "pre-commit": "npm run lint:fix && npm run lint",
-        "pre-push": "npm run lint:fix && npm run lint"
-      }
-    },
+  "scripts": {
+    "start": "nodemon server",
+    "dev": "webpack --mode=development",
+    "lint": "eslint . --ext .js --ext .jsx",
+    "lint:fix": "eslint . --fix --ext .js --ext .jsx"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run lint:fix && npm run lint",
+      "pre-push": "npm run lint:fix && npm run lint"
+    }
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/MichaelPaulKunz/BackpackApp.git"
