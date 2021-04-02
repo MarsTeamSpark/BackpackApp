@@ -1,15 +1,16 @@
 import React from 'react';
 // import PropTypes from 'prop-types';
 // import ReactDOM from 'react-dom';
-import Map from './Map.jsx';
+import Route from './Route.jsx';
+import Safety from './Safety.jsx';
 
-class App extends React.Component {
+class Map extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       
     };
-
+    
   }
 
 
@@ -17,10 +18,12 @@ class App extends React.Component {
   render() {
     return (
       <div>
-        <Map/>
+        <div className="Map"> I am the map! </div>
+        <Safety/>
+        <Route/>
       </div>
     );
   }
 }
 
-export default App;
+export default Map;
