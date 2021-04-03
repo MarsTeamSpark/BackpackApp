@@ -1,15 +1,14 @@
 import React from 'react';
 // import PropTypes from 'prop-types';
 // import ReactDOM from 'react-dom';
-import Map from './Map.jsx';
 
-class App extends React.Component {
+class Safety extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       
     };
-
+    
   }
 
 
@@ -17,10 +16,10 @@ class App extends React.Component {
   render() {
     return (
       <div>
-        <Map/>
+        <div className="Safety"> This is where safety functionality will come in </div>
       </div>
     );
   }
 }
 
-export default App;
+export default Safety;
