@@ -6,16 +6,16 @@ class Safety extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      
+
     };
-    
+
   }
 
 
 
   render() {
     return (
-      <div>
+      <div style={{color: 'white'}}>
         <div className="Safety"> This is where safety functionality will come in </div>
       </div>
     );

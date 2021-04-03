@@ -1,30 +1,15 @@
 import React from 'react';
-// import PropTypes from 'prop-types';
-// import ReactDOM from 'react-dom';
-import Route from './Route.jsx';
-import Safety from './Safety.jsx';
+import { GoogleMap, withScriptjs, withGoogleMap } from 'react-google-maps';
 
-class Map extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      
-    };
-    
-  }
+const WrapMe = function() {
+  return (
+    <GoogleMap
+      defaultZoom={4}
+      defaultCenter={{ lat: 37.0902, lng: -95.7129 }}
+    />
+  );
+};
 
-
-
-  render() {
-    return (
-
-      <div className="map">
-        <div> I am the map! </div>
-        <Safety/>
-        <Route/>
-      </div>
-    );
-  }
-}
+const Map = withScriptjs(withGoogleMap(WrapMe));
 
 export default Map;
