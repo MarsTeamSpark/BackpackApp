@@ -17,8 +17,9 @@ class Map extends React.Component {
 
   render() {
     return (
-      <div>
-        <div className="Map"> I am the map! </div>
+
+      <div className="map">
+        <div> I am the map! </div>
         <Safety/>
         <Route/>
       </div>
