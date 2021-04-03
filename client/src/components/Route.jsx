@@ -15,14 +15,15 @@ class Route extends React.Component {
     this.state = {
       startLocation: '',
       endLocation: '',
-      // startCoord: [],
-      // endCoord: []
+      searchInput: ''
     };
     // BIND YOUR METHODS
     this.getRoute = this.getRoute.bind(this);
     this.handleEndChange = this.handleEndChange.bind(this);
     this.handleStartChange = this.handleStartChange.bind(this);
     this.getCoordinates = this.getCoordinates.bind(this);
+    this.handleSearchChange = this.handleSearchChange.bind(this);
+    this.primarySearch = this.primarySearch.bind(this);
   }
 
   getRoute () {
@@ -68,6 +69,20 @@ class Route extends React.Component {
       });
   }
 
+  primarySearch () {
+    const { searchInput } = this.state;
+    let searchedCoord;
+
+    axios.get(`https://api.openrouteservice.org/geocode/search?api_key=${ORS_KEY}&text=${searchInput}`)
+      .then(res => {
+        console.log('this should also be an array, \n', res.data.features[0].geometry.coordinates);
+        searchedCoord = res.data.features[0].geometry.coordinates;
+      })
+      .catch(err => console.log(err));
+
+    console.log('this should be the same as the previous array: \n', searchedCoord);
+  }
+
 
   handleStartChange (e) {
     this.setState({startLocation: e.target.value});
@@ -76,20 +91,31 @@ class Route extends React.Component {
   handleEndChange (e) {
     this.setState({endLocation: e.target.value});
   }
+  
+  handleSearchChange (e) {
+    this.setState({searchInput: e.target.value});
+  }
 
   render() {
     const getRoute = this.getRoute;
     const handleEndChange = this.handleEndChange;
     const handleStartChange = this.handleStartChange;
+    const handleSearchChange = this.handleSearchChange;
+    const primarySearch = this.primarySearch;
 
     return (
       <div>
         <div className="Routes"></div>
+        <form id="searchForm">
+          <input type="text" name="search" className="input" placeholder="Search a city" onChange={handleSearchChange}/>
+          <button type="button" onClick={primarySearch}>Search</button>
+        </form>
         <form id="form">
           <input type="text" name="start" className="input" placeholder="Choose Starting Point" onChange={handleStartChange}/>
           <input type="text" name="end" className="input" placeholder="Choose Destination" onChange={handleEndChange}/>
           <button type="button" onClick={getRoute}>Get Route</button>
         </form>
+
       </div>
     );
   }
