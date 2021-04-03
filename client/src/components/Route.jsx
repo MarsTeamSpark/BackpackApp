@@ -1,4 +1,11 @@
+/* eslint-disable quotes */
+/* eslint-disable no-unused-vars */
+/* eslint-disable camelcase */
+/* eslint-disable no-console */
+/* eslint-disable react/destructuring-assignment */
 import React from 'react';
+import axios from 'axios';
+import ORS_KEY from '../../../server/config.js';
 // import PropTypes from 'prop-types';
 // import ReactDOM from 'react-dom';
 
@@ -6,17 +13,83 @@ class Route extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      
+      startLocation: '',
+      endLocation: '',
+      // startCoord: [],
+      // endCoord: []
     };
-    
+    // BIND YOUR METHODS
+    this.getRoute = this.getRoute.bind(this);
+    this.handleEndChange = this.handleEndChange.bind(this);
+    this.handleStartChange = this.handleStartChange.bind(this);
+    this.getCoordinates = this.getCoordinates.bind(this);
+  }
+
+  getRoute () {
+    const { startLocation, endLocation } = this.state;
+    let startCoordinates;
+    let endCoordinates;
+    this.getCoordinates(startLocation)
+      .then(arr => {
+        console.log('this should be the starting locations coordinates \n', arr);
+        startCoordinates = arr;
+        console.log('these are the starting coordinates', startCoordinates);
+      })
+      .then(() => {
+        this.getCoordinates(endLocation)
+          .then(arr => {
+            console.log('this should be the end location coordinates \n', arr);
+            endCoordinates = arr;
+            console.log('these are the end coordinates', endCoordinates);
+          })
+          .then(() => {
+            axios.get(`https://api.openrouteservice.org/v2/directions/driving-car?api_key=${ORS_KEY}&start=${startCoordinates}&end=${endCoordinates}`)
+              .then(response => {
+                console.log(JSON.stringify(response.data));
+              })
+              .catch(function (error) {
+                console.log(error);
+              });
+          })
+          .catch(err => {
+            console.log(err);
+          });
+      });
+  }
+
+  getCoordinates (str) {
+    return axios.get(`https://api.openrouteservice.org/geocode/search?api_key=${ORS_KEY}&text=${str}`)
+      .then(res => {
+        console.log('this should be an array', res.data.features[0].geometry.coordinates);
+        return res.data.features[0].geometry.coordinates;
+      })
+      .catch(err => {
+        console.log(err);
+      });
   }
 
 
+  handleStartChange (e) {
+    this.setState({startLocation: e.target.value});
+  }
+  
+  handleEndChange (e) {
+    this.setState({endLocation: e.target.value});
+  }
 
   render() {
+    const getRoute = this.getRoute;
+    const handleEndChange = this.handleEndChange;
+    const handleStartChange = this.handleStartChange;
+
     return (
       <div>
-        <div className="Routes"> This is where route functionality will come in </div>
+        <div className="Routes"></div>
+        <form id="form">
+          <input type="text" name="start" className="input" placeholder="Choose Starting Point" onChange={handleStartChange}/>
+          <input type="text" name="end" className="input" placeholder="Choose Destination" onChange={handleEndChange}/>
+          <button type="button" onClick={getRoute}>Get Route</button>
+        </form>
       </div>
     );
   }
