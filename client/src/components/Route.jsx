@@ -5,7 +5,7 @@
 /* eslint-disable react/destructuring-assignment */
 import React from 'react';
 import axios from 'axios';
-import ORS_KEY from '../../../server/config.js';
+const ORS_KEY = require('../../../server/config.js');
 // import PropTypes from 'prop-types';
 // import ReactDOM from 'react-dom';
 
