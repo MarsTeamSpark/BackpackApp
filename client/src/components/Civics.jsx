@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 /* eslint-disable camelcase */
 import React from 'react';
 import axios from 'axios';
@@ -19,30 +20,31 @@ class Civics extends React.Component {
   }
 
   getCivicsInformation() {
+    console.log('hello from get request');
     axios.get(`https://www.googleapis.com/civicinfo/v2/representatives?key=${civics_key}&address=${this.state.address}`)
       .then(res => {
         const senatorObjs = [];
         const repObjs = [];
-        for (let i = 0; i < res.data.offices.length; i++) {
-          const index = res.data.offices[i];
+        for (let i = 0; i < res.offices.length; i++) {
+          const index = res.offices[i];
           if (index.name === 'U.S. Senator') {
             for (let j = 0; j < index.officialIndices.length; j++) {
               senatorObjs.push({
-                image: res.data.officials[index.officialIndices[j]].photoUrl,
-                name: res.data.officials[index.officialIndices[j]].name,
+                image: res.officials[index.officialIndices[j]].photoUrl,
+                name: res.officials[index.officialIndices[j]].name,
                 position: 'United States Senate',
-                party: res.data.officials[index.officialIndices[j]].party,
-                phone: res.data.officials[index.officialIndices[j]].phones[0] || 'Not Found',
+                party: res.officials[index.officialIndices[j]].party,
+                phone: res.officials[index.officialIndices[j]].phones[0] || 'Not Found',
               });
             }
           } else if (index.name === 'U.S Representative') {
             for (let h = 0; h < index.officialIndices.length; h++) {
               repObjs.push({
-                image: res.data.officials[index.officialIndices[h]].photoUrl,
-                name: res.data.officials[index.officialIndices[h]].name,
+                image: res.officials[index.officialIndices[h]].photoUrl,
+                name: res.officials[index.officialIndices[h]].name,
                 position: 'United States House of Representatives',
-                party: res.data.officials[index.officialIndices[h]].party,
-                phone: res.data.officials[index.officialIndices[h]].phones[0] || 'Not Found',
+                party: res.officials[index.officialIndices[h]].party,
+                phone: res.officials[index.officialIndices[h]].phones[0] || 'Not Found',
               });
             }
           }
