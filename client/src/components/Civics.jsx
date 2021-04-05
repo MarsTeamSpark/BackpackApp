@@ -1,7 +1,9 @@
+/* eslint-disable camelcase */
 import React from 'react';
 import axios from 'axios';
+import Reps from './Reps.jsx';
 
-const key = 'AIzaSyAD2WZGwO_2MLEDXm4EnBjHJ4H6_tZLlV8';
+const { civics_key } = require('../../../server/config.js');
 
 class Civics extends React.Component {
   constructor(props) {
@@ -17,9 +19,8 @@ class Civics extends React.Component {
   }
 
   getCivicsInformation() {
-    axios.get(`https://www.googleapis.com/civicinfo/v2/representatives?key=${key}&address=${this.state.address}`)
+    axios.get(`https://www.googleapis.com/civicinfo/v2/representatives?key=${civics_key}&address=${this.state.address}`)
       .then(res => {
-        //console.log('this should be an array', res.data.features[0].geometry.coordinates);
         const senatorObjs = [];
         const repObjs = [];
         for (let i = 0; i < res.data.offices.length; i++) {
@@ -56,10 +57,39 @@ class Civics extends React.Component {
       });
   }
 
+  componentDidMount() {
+    this.getCivicsInformation();
+  }
+
   render() {
+    const { senators, reps } = this.state;
     return (
       <div style={{color: 'white'}}>
-        <div className="Safety"> This is where civics functionality will come in </div>
+        <div className="Senators">
+          {
+            senators.map(sen => {
+              <Reps 
+                image={sen.image} 
+                name={sen.name} 
+                position={sen.position} 
+                party={sen.party} 
+                phone={sen.phone}
+              />;
+            })
+          }</div>
+        <div>
+          {
+            reps.map(rep => {
+              <Reps 
+                image={rep.image} 
+                name={rep.name} 
+                position={rep.position} 
+                party={rep.party} 
+                phone={rep.phone}
+              />;
+            })
+          }
+        </div>
       </div>
     );
   }

@@ -4,6 +4,7 @@ import React from 'react';
 import Map from './Map.jsx';
 import Route from './Route.jsx';
 import Safety from './Safety.jsx';
+import Civics from './Civics.jsx';
 import { mapKey } from '../../../server/config.js';
 
 class App extends React.Component {
@@ -30,6 +31,7 @@ class App extends React.Component {
             mapElement={<div style={{ height: '80%'}} />}
           />
         </div>
+        <Civics/>
       </div>
     );
   }
