@@ -3,7 +3,7 @@ import React from 'react';
 // import ReactDOM from 'react-dom';
 //import Map from './Map.jsx';
 import Route from './Route.jsx';
-import Safety from './Safety.jsx';
+//import Safety from './Safety.jsx';
 //const { mapKey } = require('../../../server/config');
 
 class App extends React.Component {
@@ -21,7 +21,6 @@ class App extends React.Component {
     return (
       <div>
         <Route />
-        <Safety />
       </div>
     );
   }
