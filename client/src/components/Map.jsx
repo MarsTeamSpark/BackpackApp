@@ -10,9 +10,10 @@ const WrapMe = function(props) {
   return (
     <GoogleMap
       // eslint-disable-next-line react/destructuring-assignment
-      defaultZoom={props.zoom}
+      zoom={props.zoom}
       // eslint-disable-next-line react/destructuring-assignment
-      defaultCenter={props.center}
+      center={props.center}
+
     >
       {parksData.map((park) => (
         <Marker
@@ -24,9 +25,7 @@ const WrapMe = function(props) {
           onClick={() => {
             setSelectedPark(park);
           }}
-          icon={{
-            //url: '/backpack.jpg',
-          }}
+          
         />
       ))}
       {selectedPark && (

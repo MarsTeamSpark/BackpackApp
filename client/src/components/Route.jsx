@@ -54,6 +54,7 @@ class Route extends React.Component {
           .then(() => {
             axios.get(`https://api.openrouteservice.org/v2/directions/driving-car?api_key=${ORS_KEY}&start=${startCoordinates}&end=${endCoordinates}`)
               .then(response => {
+                console.log(response.data);
                 console.log(JSON.stringify(response.data));
               })
               .catch(function (error) {
@@ -85,10 +86,12 @@ class Route extends React.Component {
       .then(res => {
         console.log('this should also be an array, \n', res.data.features[0].geometry.coordinates);
         searchedCoord = res.data.features[0].geometry.coordinates;
+        console.log('please don\'t be undefined', searchedCoord);
+        this.setState({ center: {lat: searchedCoord[1], lng: searchedCoord[0]}, zoom: 10 });
       })
       .catch(err => console.log(err));
 
-    console.log('this should be the same as the previous array: \n', searchedCoord);
+    
   }
 
 
