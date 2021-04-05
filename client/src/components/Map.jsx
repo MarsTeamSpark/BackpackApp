@@ -13,6 +13,7 @@ const WrapMe = function(props) {
       zoom={props.zoom}
       // eslint-disable-next-line react/destructuring-assignment
       center={props.center}
+
     >
       {parksData.map((park) => (
         <Marker
