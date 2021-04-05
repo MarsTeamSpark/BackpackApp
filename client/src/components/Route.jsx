@@ -114,8 +114,11 @@ class Route extends React.Component {
     const handleSearchChange = this.handleSearchChange;
     const primarySearch = this.primarySearch;
 
+    const { searchInput } = this.state;
+
     return (
       <div>
+        {console.log('From Route.jsx:', searchInput)}
         <div className="Routes"></div>
         <form id="searchForm">
           <input type="text" name="search" className="input" placeholder="Search a city" onChange={handleSearchChange}/>
@@ -137,7 +140,10 @@ class Route extends React.Component {
             center={this.state.center}
           />
         </div>
-        <Information test={'Hi, Im an Information Test'}/>
+        <Information
+          test={'Hi, Im an Information Test'}
+          searchInput={searchInput}
+        />
       </div>
     );
   }
