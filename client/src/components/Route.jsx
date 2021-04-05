@@ -5,7 +5,11 @@
 /* eslint-disable react/destructuring-assignment */
 import React from 'react';
 import axios from 'axios';
+<<<<<<< HEAD
 const ORS_KEY = require('../../../server/config.js');
+=======
+const { ORS_KEY } = require('../../../server/config.js');
+>>>>>>> f8cbfa6da8ca73b09c5fee628a6f7486e852c88d
 // import PropTypes from 'prop-types';
 // import ReactDOM from 'react-dom';
 
