@@ -1,6 +1,6 @@
 import React from 'react';
 import { GoogleMap, withScriptjs, withGoogleMap } from 'react-google-maps';
-
+//getting started with render parks
 const WrapMe = function() {
   return (
     <GoogleMap
