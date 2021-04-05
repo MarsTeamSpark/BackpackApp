@@ -1,13 +1,18 @@
+/* eslint-disable react/prop-types */
 import React, { useState } from 'react';
 import { GoogleMap, withScriptjs, withGoogleMap, Marker, InfoWindow } from 'react-google-maps';
 //getting started with render parks
 import * as parksData from '../../src/nationalparksdata.json';
-const WrapMe = function() {
+const WrapMe = function(props) {
   const [selectedPark, setSelectedPark] = useState(null);
+  // eslint-disable-next-line react/destructuring-assignment
+  //console.log(props.test);
   return (
     <GoogleMap
-      defaultZoom={4}
-      defaultCenter={{ lat: 37.0902, lng: -95.7129 }}
+      // eslint-disable-next-line react/destructuring-assignment
+      defaultZoom={props.zoom}
+      // eslint-disable-next-line react/destructuring-assignment
+      defaultCenter={props.center}
     >
       {parksData.map((park) => (
         <Marker

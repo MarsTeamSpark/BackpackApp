@@ -8,14 +8,22 @@ import axios from 'axios';
 const { ORS_KEY } = require('../../../server/config.js');
 // import PropTypes from 'prop-types';
 // import ReactDOM from 'react-dom';
-
+import Information from './Information.jsx';
+import Map from './Map.jsx';
+const { mapKey } = require('../../../server/config');
 class Route extends React.Component {
   constructor(props) {
     super(props);
+    /**
+     * defaultZoom={4}
+     * defaultCenter={{ lat: 37.0902, lng: -95.7129 }}
+     */
     this.state = {
       startLocation: '',
       endLocation: '',
-      searchInput: ''
+      searchInput: '',
+      zoom: 4,
+      center: { lat: 37.0902, lng: -95.7129 }
     };
     // BIND YOUR METHODS
     this.getRoute = this.getRoute.bind(this);
@@ -87,11 +95,11 @@ class Route extends React.Component {
   handleStartChange (e) {
     this.setState({startLocation: e.target.value});
   }
-  
+
   handleEndChange (e) {
     this.setState({endLocation: e.target.value});
   }
-  
+
   handleSearchChange (e) {
     this.setState({searchInput: e.target.value});
   }
@@ -115,7 +123,18 @@ class Route extends React.Component {
           <input type="text" name="end" className="input" placeholder="Choose Destination" onChange={handleEndChange}/>
           <button type="button" onClick={getRoute}>Get Route</button>
         </form>
-
+        <div style={{width: '50vw', height: '80vh'}}>
+          <Map
+            googleMapURL={`https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places&key=${mapKey}`}
+            loadingElement={<div style={{ height: '80%'}} />}
+            containerElement={<div style={{ height: '80%'}} />}
+            mapElement={<div style={{ height: '80%'}} />}
+            test={'Hi, Im a Map Test'}
+            zoom={this.state.zoom}
+            center={this.state.center}
+          />
+        </div>
+        <Information test={'Hi, Im an Information Test'}/>
       </div>
     );
   }
