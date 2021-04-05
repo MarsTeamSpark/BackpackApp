@@ -46,6 +46,7 @@ class Route extends React.Component {
           .then(() => {
             axios.get(`https://api.openrouteservice.org/v2/directions/driving-car?api_key=${ORS_KEY}&start=${startCoordinates}&end=${endCoordinates}`)
               .then(response => {
+                console.log(response.data);
                 console.log(JSON.stringify(response.data));
               })
               .catch(function (error) {
