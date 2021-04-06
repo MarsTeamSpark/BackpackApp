@@ -61,7 +61,7 @@ class App extends React.Component {
                 let placeHolder = [];
                 while (coorArray.length > 25) {
                   console.log(`array length = ${coorArray.length}`);
-                  for (let i = 0; i < coorArray.length; i += 5) {
+                  for (let i = 0; i < coorArray.length; i += 2) {
                     placeHolder.push(coorArray[i]);
                   }
                   coorArray = placeHolder;
