@@ -19,7 +19,7 @@ class Reps extends React.Component {
     return (
       <div>
         <h3>{this.props.name}</h3>
-        <image src={this.props.image}></image>
+        <img src={this.props.image}/>
         <div>Position: {this.props.position}</div>
         <div>Party: {this.props.party}</div>
         <div>Phone: {this.props.phone}</div>

@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-key */
 /* eslint-disable no-console */
 /* eslint-disable camelcase */
 import React from 'react';
@@ -10,7 +11,6 @@ class Civics extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      address: '1300 Perdido St New Orleans LA',
       senators: [],
       reps: [],
         
@@ -21,77 +21,79 @@ class Civics extends React.Component {
 
   getCivicsInformation() {
     console.log('hello from get request');
-    axios.get(`https://www.googleapis.com/civicinfo/v2/representatives?key=${civics_key}&address=${this.state.address}`)
+    const config = {
+      method: 'get',
+      url: `https://www.googleapis.com/civicinfo/v2/representatives?key=${civics_key}&address=${this.props.searchInput}`,
+      headers: { }
+    };
+      
+    axios.request(config)
       .then(res => {
+        console.log(res);
         const senatorObjs = [];
-        const repObjs = [];
-        for (let i = 0; i < res.offices.length; i++) {
-          const index = res.offices[i];
+        for (let i = 0; i < res.data.offices.length; i++) {
+          const index = res.data.offices[i];
           if (index.name === 'U.S. Senator') {
             for (let j = 0; j < index.officialIndices.length; j++) {
               senatorObjs.push({
-                image: res.officials[index.officialIndices[j]].photoUrl,
-                name: res.officials[index.officialIndices[j]].name,
+                image: res.data.officials[index.officialIndices[j]].photoUrl,
+                name: res.data.officials[index.officialIndices[j]].name,
                 position: 'United States Senate',
-                party: res.officials[index.officialIndices[j]].party,
-                phone: res.officials[index.officialIndices[j]].phones[0] || 'Not Found',
+                party: res.data.officials[index.officialIndices[j]].party,
+                phone: res.data.officials[index.officialIndices[j]].phones[0] || 'Not Found',
               });
             }
-          } else if (index.name === 'U.S Representative') {
+          } else if (index.name === 'U.S. Representative') {
             for (let h = 0; h < index.officialIndices.length; h++) {
-              repObjs.push({
-                image: res.officials[index.officialIndices[h]].photoUrl,
-                name: res.officials[index.officialIndices[h]].name,
+              senatorObjs.push({
+                image: res.data.officials[index.officialIndices[h]].photoUrl,
+                name: res.data.officials[index.officialIndices[h]].name,
                 position: 'United States House of Representatives',
-                party: res.officials[index.officialIndices[h]].party,
-                phone: res.officials[index.officialIndices[h]].phones[0] || 'Not Found',
+                party: res.data.officials[index.officialIndices[h]].party,
+                phone: res.data.officials[index.officialIndices[h]].phones[0] || 'Not Found',
               });
             }
           }
         }
         this.setState({
           senators: senatorObjs,
-          reps: repObjs
         });
       })
       .catch(err => {
-        alert(`error: ${err}`);
+        console.log(err);
+      })
+      .catch(error => {
+        console.log(error);
       });
   }
+  
 
   componentDidMount() {
     this.getCivicsInformation();
   }
 
   render() {
-    const { senators, reps } = this.state;
+    const { senators } = this.state;
     return (
       <div style={{color: 'white'}}>
         <div className="Senators">
           {
-            senators.map(sen => {
+            senators.map(sen => (
               <Reps 
                 image={sen.image} 
                 name={sen.name} 
                 position={sen.position} 
                 party={sen.party} 
                 phone={sen.phone}
-              />;
-            })
-          }</div>
-        <div>
-          {
-            reps.map(rep => {
-              <Reps 
-                image={rep.image} 
-                name={rep.name} 
-                position={rep.position} 
-                party={rep.party} 
-                phone={rep.phone}
-              />;
-            })
+              />
+            ))
           }
         </div>
+        <button onClick={() => 
+            
+          this.getCivicsInformation()
+            
+        }>Get Civic Info</button>
       </div>
     );
   }

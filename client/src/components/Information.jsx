@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 /* eslint-disable no-console */
 import React from 'react';
 // import PropTypes from 'prop-types';
@@ -8,7 +9,7 @@ class Information extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-
+      // searchInput: props.searchInput
     };
 
   }
@@ -16,12 +17,16 @@ class Information extends React.Component {
 
 
   render() {
-    console.log('Hi team. You can console log here');
+    console.log('From Information.jsx:', this.props.searchInput);
     //console.log(this.props.test);
+    //const { searchInput } = this.props;
     return (
-      <div style={{color: 'white'}}>
-        <Safety />
-        <Civics/>
+      <div>
+        <Safety
+          searchInput={this.props.searchInput}
+        />
+        <Civics
+          searchInput={this.props.searchInput}/>
       </div>
     );
   }
