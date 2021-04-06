@@ -55,7 +55,9 @@ class App extends React.Component {
             axios.get(`https://api.openrouteservice.org/v2/directions/driving-car?api_key=${ORS_KEY}&start=${startCoordinates}&end=${endCoordinates}`)
               .then(response => {
                 //console.log(response.data);
-                console.log(JSON.stringify(response.data));
+                console.log(JSON.stringify(response.data.features[0].geometry.coordinates));
+                let coorArray = response.data.features[0].geometry.coordinates;
+                console.log(coorArray.length);
               })
               .catch(function (error) {
                 console.log(error);
@@ -89,7 +91,7 @@ class App extends React.Component {
         console.log('please don\'t be undefined', searchedCoord);
         this.setState({ center: {lat: searchedCoord[1], lng: searchedCoord[0]}, zoom: 10 });
       })
-      .catch(err => console.log(err));    
+      .catch(err => console.log(err));
   }
 
 
