@@ -1,0 +1,32 @@
+/* eslint-disable react/prop-types */
+/* eslint-disable react/destructuring-assignment */
+import React from 'react';
+// import PropTypes from 'prop-types';
+// import ReactDOM from 'react-dom';
+
+class Reps extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+
+    };
+
+  }
+
+
+
+  render() {
+    return (
+      <div>
+        <h3>{this.props.name}</h3>
+        <img src={this.props.image}/>
+        <div>Position: {this.props.position}</div>
+        <div>Party: {this.props.party}</div>
+        <div>Phone: {this.props.phone}</div>
+      </div>
+    );
+  }
+}
+
+export default Reps;
+
