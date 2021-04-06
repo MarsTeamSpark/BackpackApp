@@ -54,7 +54,11 @@ class Safety extends React.Component {
         <div>Restrictions: {this.state.restrictions}</div>
         <div>Safety Index: {this.state.safetyIndex}</div>
         <div>Risk: {this.state.risk}</div>
-        <button onClick={() => this.getSafetyData()}>Get Info</button>
+        <button onClick={() =>
+
+          // this.getSafetyData()
+          console.log('get info button does actually work')
+        }>Get Info</button>
       </div>
     );
   }
