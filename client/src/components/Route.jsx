@@ -40,21 +40,21 @@ class Route extends React.Component {
     let endCoordinates;
     this.getCoordinates(startLocation)
       .then(arr => {
-        console.log('this should be the starting locations coordinates \n', arr);
+        //console.log('this should be the starting locations coordinates \n', arr);
         startCoordinates = arr;
         console.log('these are the starting coordinates', startCoordinates);
       })
       .then(() => {
         this.getCoordinates(endLocation)
           .then(arr => {
-            console.log('this should be the end location coordinates \n', arr);
+            //console.log('this should be the end location coordinates \n', arr);
             endCoordinates = arr;
             console.log('these are the end coordinates', endCoordinates);
           })
           .then(() => {
             axios.get(`https://api.openrouteservice.org/v2/directions/driving-car?api_key=${ORS_KEY}&start=${startCoordinates}&end=${endCoordinates}`)
               .then(response => {
-                console.log(response.data);
+                //console.log(response.data);
                 console.log(JSON.stringify(response.data));
               })
               .catch(function (error) {
@@ -118,7 +118,7 @@ class Route extends React.Component {
 
     return (
       <div>
-        {console.log('From Route.jsx:', searchInput)}
+        {/* {console.log('From Route.jsx:', searchInput)} */}
         <div className="Routes"></div>
         <form id="searchForm">
           <input type="text" name="search" className="input" placeholder="Search a city" onChange={handleSearchChange}/>

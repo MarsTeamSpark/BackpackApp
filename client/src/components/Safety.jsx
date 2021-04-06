@@ -49,7 +49,7 @@ class Safety extends React.Component {
   render() {
     return (
       <div >
-        {console.log('From Safety.jsx:', this.props.searchInput)}
+        {/* {console.log('From Safety.jsx:', this.props.searchInput)} */}
         <div className="Safety"> This is where safety functionality will come in </div>
         <div>Restrictions: {this.state.restrictions}</div>
         <div>Safety Index: {this.state.safetyIndex}</div>
