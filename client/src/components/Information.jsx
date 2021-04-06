@@ -5,6 +5,7 @@ import React from 'react';
 // import PropTypes from 'prop-types';
 // import ReactDOM from 'react-dom';
 import Safety from './Safety.jsx';
+import WalkScore from './WalkScore.jsx';
 import Civics from './Civics.jsx';
 class Information extends React.Component {
   constructor(props) {
@@ -25,6 +26,9 @@ class Information extends React.Component {
       <div>
         <Safety
           searchInput={this.props.searchInput}
+        />
+        <WalkScore
+          center={this.props.center}
         />
         <Civics
           searchInput={this.props.searchInput}/>

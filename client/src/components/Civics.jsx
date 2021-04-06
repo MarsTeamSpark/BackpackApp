@@ -18,7 +18,6 @@ class Civics extends React.Component {
     this.state = {
       senators: [],
       reps: [],
-        
     };
     this.getCivicsInformation = this.getCivicsInformation.bind(this);
 
