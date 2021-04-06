@@ -19,7 +19,7 @@ export default createGlobalStyle`
  
     }
     .information-class {
-        
+       
     }
     button{
         outline: none;
