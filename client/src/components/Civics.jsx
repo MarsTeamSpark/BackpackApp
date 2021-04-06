@@ -1,6 +1,10 @@
+/* eslint-disable react/prop-types */
+/* eslint-disable react/destructuring-assignment */
 /* eslint-disable react/jsx-key */
 /* eslint-disable no-console */
 /* eslint-disable camelcase */
+//comment
+
 import React from 'react';
 import axios from 'axios';
 import Reps from './Reps.jsx';
