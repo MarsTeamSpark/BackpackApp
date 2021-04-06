@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 /* eslint-disable react/prop-types */
 import React, { useState } from 'react';
 import { GoogleMap, withScriptjs, withGoogleMap, Marker, InfoWindow } from 'react-google-maps';
@@ -5,8 +6,7 @@ import { GoogleMap, withScriptjs, withGoogleMap, Marker, InfoWindow } from 'reac
 import * as parksData from '../../src/nationalparksdata.json';
 const WrapMe = function(props) {
   const [selectedPark, setSelectedPark] = useState(null);
-  // eslint-disable-next-line react/destructuring-assignment
-  //console.log(props.test);
+  console.log(props.route);
   return (
     <GoogleMap
       // eslint-disable-next-line react/destructuring-assignment
@@ -25,7 +25,11 @@ const WrapMe = function(props) {
           onClick={() => {
             setSelectedPark(park);
           }}
-          
+          icon={{
+            url: 'https://static.thenounproject.com/png/7444-200.png',
+            // eslint-disable-next-line no-undef
+            scaledSize: new google.maps.Size(25, 25)
+          }}
         />
       ))}
       {selectedPark && (
@@ -44,6 +48,15 @@ const WrapMe = function(props) {
           </div>
         </InfoWindow>
       )}
+      {props.route.map((point, index) => (
+        <Marker
+          key={index}
+          position={{
+            lat: point[1],
+            lng: point[0]
+          }}
+        />
+      ))}
     </GoogleMap>
   );
 };

@@ -23,7 +23,8 @@ class App extends React.Component {
       endLocation: '',
       searchInput: '',
       zoom: 4,
-      center: { lat: 37.0902, lng: -95.7129 }
+      center: { lat: 37.0902, lng: -95.7129 },
+      routeArray: []
     };
     // BIND YOUR METHODS
     this.getRoute = this.getRoute.bind(this);
@@ -55,7 +56,19 @@ class App extends React.Component {
             axios.get(`https://api.openrouteservice.org/v2/directions/driving-car?api_key=${ORS_KEY}&start=${startCoordinates}&end=${endCoordinates}`)
               .then(response => {
                 //console.log(response.data);
-                console.log(JSON.stringify(response.data));
+                //console.log(JSON.stringify(response.data.features[0].geometry.coordinates));
+                let coorArray = response.data.features[0].geometry.coordinates;
+                let placeHolder = [];
+                while (coorArray.length > 25) {
+                  console.log(`array length = ${coorArray.length}`);
+                  for (let i = 0; i < coorArray.length; i += 2) {
+                    placeHolder.push(coorArray[i]);
+                  }
+                  coorArray = placeHolder;
+                  placeHolder = [];
+                }
+                console.log(coorArray);
+                this.setState({ routeArray: coorArray });
               })
               .catch(function (error) {
                 console.log(error);
@@ -89,7 +102,7 @@ class App extends React.Component {
         console.log('please don\'t be undefined', searchedCoord);
         this.setState({ center: {lat: searchedCoord[1], lng: searchedCoord[0]}, zoom: 10 });
       })
-      .catch(err => console.log(err));    
+      .catch(err => console.log(err));
   }
 
 
@@ -137,6 +150,7 @@ class App extends React.Component {
             test={'Hi, Im a Map Test'}
             zoom={this.state.zoom}
             center={this.state.center}
+            route={this.state.routeArray}
           />
         </div>
         <Information
