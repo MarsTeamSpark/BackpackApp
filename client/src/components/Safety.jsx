@@ -1,3 +1,4 @@
+/* eslint-disable react/destructuring-assignment */
 /* eslint-disable react/prop-types */
 /* eslint-disable no-console */
 import React from 'react';
@@ -48,9 +49,8 @@ class Safety extends React.Component {
 
   render() {
     return (
-      <div >
+      <div className="safety">
         {console.log('From Safety.jsx:', this.props.searchInput)}
-        <div className="Safety"> This is where safety functionality will come in </div>
         <div>Restrictions: {this.state.restrictions}</div>
         <div>Safety Index: {this.state.safetyIndex}</div>
         <div>Risk: {this.state.risk}</div>
@@ -58,7 +58,7 @@ class Safety extends React.Component {
             
         //this.getSafetyData()
           console.log('safety funcitonality still working!')
-        }>Get Info</button>
+        } disabled >Get Info</button>
       </div>
     );
   }
