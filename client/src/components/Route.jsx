@@ -122,15 +122,16 @@ class Route extends React.Component {
         <div className="Routes"></div>
         <form id="searchForm">
           <input type="text" name="search" className="input" placeholder="Search a city" onChange={handleSearchChange}/>
-          <button type="button" onClick={primarySearch}>Search</button>
+          <button type="button" className="input" onClick={primarySearch}>Search</button>
         </form>
         <form id="form">
           <input type="text" name="start" className="input" placeholder="Choose Starting Point" onChange={handleStartChange}/>
           <input type="text" name="end" className="input" placeholder="Choose Destination" onChange={handleEndChange}/>
-          <button type="button" onClick={getRoute}>Get Route</button>
+          <button type="button" className="input" onClick={getRoute}>Get Route</button>
         </form>
         <div style={{width: '50vw', height: '80vh'}}>
           <Map
+            className="map"
             googleMapURL={`https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places&key=${mapKey}`}
             loadingElement={<div style={{ height: '80%'}} />}
             containerElement={<div style={{ height: '80%'}} />}
@@ -141,6 +142,7 @@ class Route extends React.Component {
           />
         </div>
         <Information
+          className="information-class"
           test={'Hi, Im an Information Test'}
           searchInput={searchInput}
         />

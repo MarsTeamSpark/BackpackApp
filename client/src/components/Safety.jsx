@@ -1,3 +1,4 @@
+/* eslint-disable react/destructuring-assignment */
 /* eslint-disable react/prop-types */
 /* eslint-disable no-console */
 import React from 'react';
@@ -58,7 +59,7 @@ class Safety extends React.Component {
             
         //this.getSafetyData()
           console.log('safety funcitonality still working!')
-        }>Get Info</button>
+        } disabled >Get Info</button>
       </div>
     );
   }
