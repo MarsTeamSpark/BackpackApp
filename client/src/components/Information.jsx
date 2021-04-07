@@ -29,6 +29,7 @@ class Information extends React.Component {
         />
         <WalkScore
           center={this.props.center}
+          searchInput={this.props.searchInput}
         />
         <Civics
           searchInput={this.props.searchInput}/>

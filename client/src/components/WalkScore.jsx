@@ -25,7 +25,7 @@ class WalkScore extends React.Component {
       method: 'GET',
       url: 'https://walk-score.p.rapidapi.com/score',
       params: {
-        lon: this.props.center.long,
+        lon: this.props.center.lng,
         lat: this.props.center.lat,
         address: 'https://api.walkscore.com/score',
         wsapikey: walkScoreKey,
@@ -40,7 +40,7 @@ class WalkScore extends React.Component {
     };
 
     axios.request(options).then((response) => {
-      console.log(response.data);
+      //console.log(response.data);
       this.setState({
         walkScore: response.data.walkscore,
         walkDescription: response.data.description,
@@ -62,8 +62,7 @@ class WalkScore extends React.Component {
   render() {
     return (
       <div >
-        {console.log('From WalkScore.jsx:', this.props.searchInput)}
-        <div className="Safety"> Walkability Data! </div>
+        <div className="Safety"> Tight Walkability Data! </div>
         <div>Walk Score: {this.state.walkScore}</div>
         <div>Walk Description: {this.state.walkDescription}</div>
         <div>Transit Score: {this.state.transitScore}</div>

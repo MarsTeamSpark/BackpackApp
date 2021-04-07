@@ -50,7 +50,6 @@ class Safety extends React.Component {
   render() {
     return (
       <div className="safety">
-        {console.log('From Safety.jsx:', this.props.searchInput)}
         <div>Restrictions: {this.state.restrictions}</div>
         <div>Safety Index: {this.state.safetyIndex}</div>
         <div>Risk: {this.state.risk}</div>
