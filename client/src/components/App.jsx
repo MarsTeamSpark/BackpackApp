@@ -10,6 +10,7 @@ const { ORS_KEY } = require('../../../server/config.js');
 // import ReactDOM from 'react-dom';
 import Information from './Information.jsx';
 import Map from './Map.jsx';
+import Auth from './Auth.jsx';
 const { mapKey } = require('../../../server/config');
 class App extends React.Component {
   constructor(props) {
@@ -155,6 +156,7 @@ class App extends React.Component {
       <div>
         {/* {console.log('From Route.jsx:', searchInput)} */}
         <div className="App"></div>
+        <Auth />
         <form id="searchForm">
           <input type="text" name="search" className="input" placeholder="Search a city" onChange={handleSearchChange}/>
           <button type="button" className="input" onClick={primarySearch}>Search</button>
