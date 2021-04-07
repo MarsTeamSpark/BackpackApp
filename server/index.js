@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 const path = require('path');
 const express = require('express');
 const CLIENT_PATH = path.resolve(__dirname, '../client/dist');
