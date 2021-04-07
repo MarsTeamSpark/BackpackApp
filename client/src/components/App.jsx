@@ -34,6 +34,30 @@ class App extends React.Component {
     this.getCoordinates = this.getCoordinates.bind(this);
     this.handleSearchChange = this.handleSearchChange.bind(this);
     this.primarySearch = this.primarySearch.bind(this);
+    this.reCenter = this.reCenter.bind(this);
+    this.coordinateToString = this.coordinateToString.bind(this);
+  }
+
+  reCenter (latitude, longitude, zm) {
+    this.setState({center: { lat: latitude, lng: longitude}, zoom: zm});
+    //console.log(latitude);
+    //console.log(longitude);
+    //console.log(zm);
+    this.coordinateToString(latitude, longitude);
+  }
+
+  coordinateToString(latitude, longitude) {
+    axios.get(`https://api.openrouteservice.org/geocode/reverse?api_key=${ORS_KEY}&point.lon=${longitude}&point.lat=${latitude}`)
+      .then(data => {
+        //console.log(JSON.stringify(data.data.features[0].properties.locality));
+        //console.log(JSON.stringify(data.data.features[0].properties.region));
+        const city = JSON.stringify(data.data.features[0].properties.locality);
+        const state = JSON.stringify(data.data.features[0].properties.region);
+        this.setState({searchInput: city + ', ' + state});
+      })
+      .catch(error => {
+        console.log(error);
+      });
   }
 
   getRoute () {
@@ -44,14 +68,14 @@ class App extends React.Component {
       .then(arr => {
         //console.log('this should be the starting locations coordinates \n', arr);
         startCoordinates = arr;
-        console.log('these are the starting coordinates', startCoordinates);
+        //console.log('these are the starting coordinates', startCoordinates);
       })
       .then(() => {
         this.getCoordinates(endLocation)
           .then(arr => {
             //console.log('this should be the end location coordinates \n', arr);
             endCoordinates = arr;
-            console.log('these are the end coordinates', endCoordinates);
+            //console.log('these are the end coordinates', endCoordinates);
           })
           .then(() => {
             axios.get(`https://api.openrouteservice.org/v2/directions/driving-car?api_key=${ORS_KEY}&start=${startCoordinates}&end=${endCoordinates}`)
@@ -61,14 +85,14 @@ class App extends React.Component {
                 let coorArray = response.data.features[0].geometry.coordinates;
                 let placeHolder = [];
                 while (coorArray.length > 25) {
-                  console.log(`array length = ${coorArray.length}`);
+                  //console.log(`array length = ${coorArray.length}`);
                   for (let i = 0; i < coorArray.length; i += 2) {
                     placeHolder.push(coorArray[i]);
                   }
                   coorArray = placeHolder;
                   placeHolder = [];
                 }
-                console.log(coorArray);
+                //console.log(coorArray);
                 this.setState({ routeArray: coorArray });
               })
               .catch(function (error) {
@@ -84,7 +108,7 @@ class App extends React.Component {
   getCoordinates (str) {
     return axios.get(`https://api.openrouteservice.org/geocode/search?api_key=${ORS_KEY}&text=${str}`)
       .then(res => {
-        console.log('this should be an array', res.data.features[0].geometry.coordinates);
+        //console.log('this should be an array', res.data.features[0].geometry.coordinates);
         return res.data.features[0].geometry.coordinates;
       })
       .catch(err => {
@@ -98,9 +122,9 @@ class App extends React.Component {
 
     axios.get(`https://api.openrouteservice.org/geocode/search?api_key=${ORS_KEY}&text=${searchInput}`)
       .then(res => {
-        console.log('this should also be an array, \n', res.data.features[0].geometry.coordinates);
+        //console.log('this should also be an array, \n', res.data.features[0].geometry.coordinates);
         searchedCoord = res.data.features[0].geometry.coordinates;
-        console.log('please don\'t be undefined', searchedCoord);
+        //console.log('please don\'t be undefined', searchedCoord);
         this.setState({ center: {lat: searchedCoord[1], lng: searchedCoord[0]}, zoom: 10 });
       })
       .catch(err => console.log(err));
@@ -152,6 +176,7 @@ class App extends React.Component {
             zoom={this.state.zoom}
             center={this.state.center}
             route={this.state.routeArray}
+            reCenter={this.reCenter}
           />
         </div>
         <Information
