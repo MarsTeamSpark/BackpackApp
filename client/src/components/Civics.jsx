@@ -18,7 +18,7 @@ class Civics extends React.Component {
     this.state = {
       senators: [],
       reps: [],
-        
+
     };
     this.getCivicsInformation = this.getCivicsInformation.bind(this);
 
@@ -31,10 +31,10 @@ class Civics extends React.Component {
       url: `https://www.googleapis.com/civicinfo/v2/representatives?key=${civics_key}&address=${this.props.searchInput}`,
       headers: { }
     };
-      
+
     axios.request(config)
       .then(res => {
-        console.log(res);
+        //console.log(res);
         const senatorObjs = [];
         for (let i = 0; i < res.data.offices.length; i++) {
           const index = res.data.offices[i];
@@ -96,7 +96,7 @@ class Civics extends React.Component {
         console.log(error);
       });
   }
-  
+
 
   componentDidMount() {
     this.getCivicsInformation();
@@ -109,20 +109,20 @@ class Civics extends React.Component {
         <div className="Senators">
           {
             senators.map(sen => (
-              <Reps 
-                image={sen.image} 
-                name={sen.name} 
-                position={sen.position} 
-                party={sen.party} 
+              <Reps
+                image={sen.image}
+                name={sen.name}
+                position={sen.position}
+                party={sen.party}
                 phone={sen.phone}
               />
             ))
           }
         </div>
-        <button onClick={() => 
-            
+        <button onClick={() =>
+
           this.getCivicsInformation()
-            
+
         }>Get Civic Info</button>
       </div>
     );
