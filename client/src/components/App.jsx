@@ -33,6 +33,11 @@ class App extends React.Component {
     this.getCoordinates = this.getCoordinates.bind(this);
     this.handleSearchChange = this.handleSearchChange.bind(this);
     this.primarySearch = this.primarySearch.bind(this);
+    this.reCenter = this.reCenter.bind(this);
+  }
+
+  reCenter (latitude, longitude) {
+    this.setState({center: { lat: latitude, lng: longitude}, zoom: 10});
   }
 
   getRoute () {
@@ -151,6 +156,7 @@ class App extends React.Component {
             zoom={this.state.zoom}
             center={this.state.center}
             route={this.state.routeArray}
+            reCenter={this.reCenter}
           />
         </div>
         <Information
