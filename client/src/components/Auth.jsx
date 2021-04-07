@@ -19,7 +19,7 @@ class Auth extends React.Component {
   render() {
     return (
       <div>
-        <button>Sign in</button>
+        <a href="/google"><span></span> Google</a>
       </div>
     );
   }
