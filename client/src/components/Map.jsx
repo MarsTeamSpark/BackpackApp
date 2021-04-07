@@ -6,7 +6,7 @@ import { GoogleMap, withScriptjs, withGoogleMap, Marker, InfoWindow } from 'reac
 import * as parksData from '../../src/nationalparksdata.json';
 const WrapMe = function(props) {
   const [selectedPark, setSelectedPark] = useState(null);
-  console.log(props.route);
+  //console.log(props.reCenter);
   return (
     <GoogleMap
       // eslint-disable-next-line react/destructuring-assignment
@@ -54,6 +54,9 @@ const WrapMe = function(props) {
           position={{
             lat: point[1],
             lng: point[0]
+          }}
+          onClick={() => {
+            props.reCenter(point[1], point[0], 10);
           }}
         />
       ))}
