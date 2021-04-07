@@ -25,7 +25,7 @@ class Civics extends React.Component {
   }
 
   getCivicsInformation() {
-    console.log('hello from get request');
+    //console.log('hello from get request');
     const config = {
       method: 'get',
       url: `https://www.googleapis.com/civicinfo/v2/representatives?key=${civics_key}&address=${this.props.searchInput}`,
