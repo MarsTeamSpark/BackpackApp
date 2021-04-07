@@ -26,6 +26,7 @@ class App extends React.Component {
       center: { lat: 37.0902, lng: -95.7129 },
       routeArray: []
     };
+    // extra little comment
     // BIND YOUR METHODS
     this.getRoute = this.getRoute.bind(this);
     this.handleEndChange = this.handleEndChange.bind(this);
