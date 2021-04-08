@@ -1,6 +1,9 @@
 {
   "git.ignoreLimitWarning": true,
   "cSpell.ignoreWords": [
-    "nationalparksdata"
+    "camelcase",
+    "key",
+    "nationalparksdata",
+    "rapidapi"
   ]
 }
