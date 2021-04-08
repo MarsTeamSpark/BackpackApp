@@ -1,4 +1,5 @@
 # BackpackApp
+
 A travel app that aids with safety considerations
 
 # To start this app:
@@ -23,9 +24,14 @@ https://developers.google.com/civic-information
 rapidApiKey:
 https://rapidapi.com/kerloom/api/safe-travel-covid-index
 
+walkScoreKey:
+https://rapidapi.com/theapiguy/api/walk-score
+
 REACT_APP_GOOGLE_KEY:
 https://developers.google.com/maps/documentation/javascript/get-api-key
+
 # OpenRouteService API
+
 Used to plot out a route between two points
 
 /directions endpoint to plot the fastest way from one set of coordinates to the other
