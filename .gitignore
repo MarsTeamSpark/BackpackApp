@@ -6,4 +6,4 @@ server/config.js
 
 .env.local
 
-server/.env
+*.env
