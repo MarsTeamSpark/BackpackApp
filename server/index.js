@@ -1,10 +1,12 @@
 /* eslint-disable no-console */
 require('dotenv').config();
+console.log(process.env.GOOGLE_CLIENT_ID);
 const path = require('path');
 const express = require('express');
 const passport = require('passport');
 const cookieSession = require('cookie-session');
 const CLIENT_PATH = path.resolve(__dirname, '../client/dist');
+const ASSETS_PATH = path.resolve(__dirname, 'assets');
 const app = express();
 require('./passport-setup');
 
@@ -19,17 +21,8 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(express.json()); //we'll need this when we start handling http requests
 app.use(express.static(CLIENT_PATH));
+app.use('/assets', express.static(ASSETS_PATH));
 const PORT = 8080;
-
-// Middleware to check if the user is authenticated
-const isUserAuthenticated = (req, res, next) => {
-  if (req.user) {
-    console.log(req.user);
-  } else {
-    console.log('You must login!');
-  }
-  next();
-};
 
 // Auth Routes
 
@@ -42,7 +35,7 @@ app.get('/google/callback', passport.authenticate('google', { failureRedirect: '
     console.log(req.user.displayName);
     console.log(req.user.emails[0].value);
     //console.log(req.user.photos[0].value);
-    res.redirect('/?user=' + req.user.displayName);
+    res.redirect('/');
   }
 );
 // Logout route
@@ -52,6 +45,19 @@ app.get('/logout', (req, res) => {
 });
 
 
+//check to see if user is logged in
+app.get('/testing', (req, res)=>{
+  if (req.user) {
+    res.send(req.user);
+  } else {
+    res.send('not logged in');
+  }
+});
+
+app.get('/failed', (req, res) => {
+  req.logout();
+  res.redirect('/');
+});
 
 app.listen(PORT, (() => {
   console.log(`Server listening at http://127.0.0.1:${PORT}`); //might want to alter this for deployment
