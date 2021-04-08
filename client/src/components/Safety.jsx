@@ -2,9 +2,8 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable no-console */
 import React from 'react';
-// import PropTypes from 'prop-types';
-// import ReactDOM from 'react-dom';
 import axios from 'axios';
+import SafetyData from './SafetyData.jsx';
 const { rapidApiKey } = require('../../../server/config.js');
 class Safety extends React.Component {
   constructor(props) {
@@ -50,16 +49,14 @@ class Safety extends React.Component {
   render() {
     return (
       <div >
-        {/* {console.log('From Safety.jsx:', this.props.searchInput)} */}
-        <div className="Safety"> This is where safety functionality will come in </div>
-        <div>Restrictions: {this.state.restrictions}</div>
-        <div>Safety Index: {this.state.safetyIndex}</div>
-        <div>Risk: {this.state.risk}</div>
-        <button onClick={() => 
-            
-        //this.getSafetyData()
-          console.log('safety funcitonality still working!')
-        } disabled >Get Info</button>
+        <div className="Safety">
+          <SafetyData
+            restrictions={this.state.restrictions}
+            safetyIndex={this.state.safetyIndex}
+            risk={this.state.risk}
+          />
+        </div>
+        <button onClick={() => this.getSafetyData()}>Get Info</button>
       </div>
     );
   }

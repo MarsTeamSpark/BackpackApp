@@ -185,6 +185,7 @@ class App extends React.Component {
           className="information-class"
           test={'Hi, Im an Information Test'}
           searchInput={searchInput}
+          center={this.state.center}
         />
       </div>
     );
