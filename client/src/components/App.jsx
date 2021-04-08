@@ -47,16 +47,26 @@ class App extends React.Component {
   }
 
   coordinateToString(latitude, longitude) {
-    axios.get(`https://api.openrouteservice.org/geocode/reverse?api_key=${ORS_KEY}&point.lon=${longitude}&point.lat=${latitude}`)
-      .then(data => {
-        //console.log(JSON.stringify(data.data.features[0].properties.locality));
-        //console.log(JSON.stringify(data.data.features[0].properties.region));
-        const city = JSON.stringify(data.data.features[0].properties.locality);
-        const state = JSON.stringify(data.data.features[0].properties.region);
-        this.setState({searchInput: city + ', ' + state});
+    // axios.get(`https://api.openrouteservice.org/geocode/reverse?api_key=${ORS_KEY}&point.lon=${longitude}&point.lat=${latitude}`)
+    //   .then(data => {
+    //     //console.log(JSON.stringify(data.data.features[0].properties.locality));
+    //     //console.log(JSON.stringify(data.data.features[0].properties.region));
+    //     const city = JSON.stringify(data.data.features[0].properties.locality);
+    //     const state = JSON.stringify(data.data.features[0].properties.region);
+    //     this.setState({searchInput: city + ', ' + state});
+    //   })
+    //   .catch(error => {
+    //     console.log(error);
+    //   });
+    console.log('hello from coordinateToString');
+    axios.put('/coordstring', {lat: latitude, lng: longitude})
+      .then(result => {
+        console.log('hello from coordstring');
+        console.log(result.data);
+        this.setState({searchInput: result.data});
       })
-      .catch(error => {
-        console.log(error);
+      .catch(err => {
+        console.log(err);
       });
   }
 
