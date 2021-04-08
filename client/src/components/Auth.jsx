@@ -2,24 +2,28 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable no-console */
 import React from 'react';
-// import PropTypes from 'prop-types';
-// import ReactDOM from 'react-dom';
-//import Safety from './Safety.jsx';
-//import Civics from './Civics.jsx';
+//import axios from 'axios';
 class Auth extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      credentials: <a href="/google"> Login </a>
     };
 
   }
 
-
+  componentDidMount() {
+    console.log('hello from auth');
+    // return axios.get('/google/callback')
+    //   .then(res => {
+    //     console.log(res);
+    //   });
+  }
 
   render() {
     return (
       <div>
-        <a href="/google"><span></span> Google</a>
+        {this.state.credentials}
       </div>
     );
   }
