@@ -6,6 +6,8 @@
   "scripts": {
     "start": "nodemon server",
     "dev": "webpack --mode=development",
+    "devStart": "npm run dev && npm start",
+    "devStart2": "webpack --mode=development && nodemon server",
     "lint": "eslint . --ext .js --ext .jsx",
     "lint:fix": "eslint . --fix --ext .js --ext .jsx"
   },

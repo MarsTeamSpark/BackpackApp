@@ -26,7 +26,9 @@ const WrapMe = function(props) {
             setSelectedPark(park);
           }}
           icon={{
-            url: 'https://static.thenounproject.com/png/7444-200.png',
+            //url: 'https://static.thenounproject.com/png/7444-200.png',
+            //url: '/assets/img/couch.svg',
+            url: '/assets/img/tree.png',
             // eslint-disable-next-line no-undef
             scaledSize: new google.maps.Size(25, 25)
           }}
