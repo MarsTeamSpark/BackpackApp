@@ -37,39 +37,22 @@ class App extends React.Component {
     this.reCenter = this.reCenter.bind(this);
     this.coordinateToString = this.coordinateToString.bind(this);
   }
-
+  //sets center from coordinates
   reCenter (latitude, longitude, zm) {
     this.setState({center: { lat: latitude, lng: longitude}, zoom: zm});
-    //console.log(latitude);
-    //console.log(longitude);
-    //console.log(zm);
     this.coordinateToString(latitude, longitude);
   }
-
+  // sets searchInput in to city name from coordinates
   coordinateToString(latitude, longitude) {
-    // axios.get(`https://api.openrouteservice.org/geocode/reverse?api_key=${ORS_KEY}&point.lon=${longitude}&point.lat=${latitude}`)
-    //   .then(data => {
-    //     //console.log(JSON.stringify(data.data.features[0].properties.locality));
-    //     //console.log(JSON.stringify(data.data.features[0].properties.region));
-    //     const city = JSON.stringify(data.data.features[0].properties.locality);
-    //     const state = JSON.stringify(data.data.features[0].properties.region);
-    //     this.setState({searchInput: city + ', ' + state});
-    //   })
-    //   .catch(error => {
-    //     console.log(error);
-    //   });
-    console.log('hello from coordinateToString');
     axios.put('/coordstring', {lat: latitude, lng: longitude})
       .then(result => {
-        console.log('hello from coordstring');
-        console.log(result.data);
         this.setState({searchInput: result.data});
       })
       .catch(err => {
         console.log(err);
       });
   }
-
+  //displays at most 25 points between two locations
   getRoute () {
     const { startLocation, endLocation } = this.state;
     let startCoordinates;
