@@ -4,7 +4,7 @@ import React from 'react';
 // import PropTypes from 'prop-types';
 // import ReactDOM from 'react-dom';
 import axios from 'axios';
-const { rapidApiKey, walkScoreKey } = require('../../../server/config.js');
+//const { rapidApiKey, walkScoreKey } = require('../../../server/config.js');
 
 class WalkScore extends React.Component {
   constructor(props) {
@@ -23,25 +23,7 @@ class WalkScore extends React.Component {
   getWalkScore() {
     console.log('hello from walkscore');
     console.log(this.props.center);
-    const options = {
-      method: 'GET',
-      url: 'https://walk-score.p.rapidapi.com/score',
-      params: {
-        lon: this.props.center.lng,
-        lat: this.props.center.lat,
-        address: 'https://api.walkscore.com/score',
-        wsapikey: walkScoreKey,
-        transit: '1',
-        bike: '1',
-        format: 'json'
-      },
-      headers: {
-        'x-rapidapi-key': rapidApiKey,
-        'x-rapidapi-host': 'walk-score.p.rapidapi.com'
-      }
-    };
-
-    axios.request(options).then((response) => {
+    axios.put('/walk', this.props.center).then((response) => {
       //console.log(response.data);
       this.setState({
         walkScore: response.data.walkscore,

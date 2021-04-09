@@ -278,10 +278,7 @@ app.put('/covid', (req, res) => {
   }
  */
 
-
-/*****
- * THIS DOES NOT WORK. RANDOLPH, PLEASE FIX THIS
- *****/
+//get walkability, bikability stats for given coordinates
 app.put('/walk', (req, res) => {
   const options = {
     method: 'GET',
