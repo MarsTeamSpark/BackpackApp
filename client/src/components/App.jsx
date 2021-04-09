@@ -9,6 +9,7 @@ import axios from 'axios';
 import Information from './Information.jsx';
 import Map from './Map.jsx';
 import Navbar from './NavBar.jsx';
+import Input from './Input.jsx';
 const { mapKey } = require('../../../server/config');
 class App extends React.Component {
   constructor(props) {
@@ -111,16 +112,13 @@ class App extends React.Component {
         <div className="App"></div>
         <Navbar/>
         <br></br>
-    
-        <form id="searchForm">
-          <input type="text" name="search" className="input" placeholder="Search a city" onChange={handleSearchChange}/>
-          <button type="button" className="input" onClick={primarySearch}>Search</button>
-        </form>
-        <form id="form">
-          <input type="text" name="start" className="input" placeholder="Choose Starting Point" onChange={handleStartChange}/>
-          <input type="text" name="end" className="input" placeholder="Choose Destination" onChange={handleEndChange}/>
-          <button type="button" className="input" onClick={getRoute}>Get Route</button>
-        </form>
+        <Input
+          handleSearchChange={this.handleSearchChange}
+          primarySearch={this.primarySearch}
+          handleStartChange = {this.handleStartChange}
+          handleEndChange = {this.handleEndChange}
+          getRoute = {this.getRoute}
+        />
         <Information
           className="information-class"
           searchInput={searchInput}
