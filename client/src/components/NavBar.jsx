@@ -10,12 +10,6 @@ const NavStyle = styled.div`
   top: 0;
   width: 97.5vw;
   background:	#7bbcb6;
-  /* background: linear-gradient(
-    180deg,
-    #b3d4d8 0%,
-     50%,
-    #cfddb6 100%
-  ); */
   margin: 0px;
   padding: 0.5rem;
   display: flex;

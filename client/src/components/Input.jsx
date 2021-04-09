@@ -28,12 +28,12 @@ class Input extends React.Component {
             <input type="text" name="search" className="input" placeholder="Search a city" onChange={this.props.handleSearchChange}/>
             <button type="button" className="input" onClick={this.props.primarySearch}>Search</button>
           </form>
+          <form id="form">
+            <input type="text" name="start" className="input" placeholder="Choose Starting Point" onChange={this.props.handleStartChange}/>
+            <input type="text" name="end" className="input" placeholder="Choose Destination" onChange={this.props.handleEndChange}/>
+            <button type="button" className="input" onClick={this.props.getRoute}>Get Route</button>
+          </form>
         </InputStyle>
-        <form id="form">
-          <input type="text" name="start" className="input" placeholder="Choose Starting Point" onChange={this.props.handleStartChange}/>
-          <input type="text" name="end" className="input" placeholder="Choose Destination" onChange={this.props.handleEndChange}/>
-          <button type="button" className="input" onClick={this.props.getRoute}>Get Route</button>
-        </form>
       </div>
     );
   }
