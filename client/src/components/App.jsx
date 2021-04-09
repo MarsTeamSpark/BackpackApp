@@ -5,9 +5,7 @@
 /* eslint-disable react/destructuring-assignment */
 import React from 'react';
 import axios from 'axios';
-const { ORS_KEY } = require('../../../server/config.js');
-// import PropTypes from 'prop-types';
-// import ReactDOM from 'react-dom';
+//const { ORS_KEY } = require('../../../server/config.js');
 import Information from './Information.jsx';
 import Map from './Map.jsx';
 import Auth from './Auth.jsx';
@@ -15,10 +13,6 @@ const { mapKey } = require('../../../server/config');
 class App extends React.Component {
   constructor(props) {
     super(props);
-    /**
-     * defaultZoom={4}
-     * defaultCenter={{ lat: 37.0902, lng: -95.7129 }}
-     */
     this.state = {
       startLocation: '',
       endLocation: '',
@@ -53,7 +47,6 @@ class App extends React.Component {
   }
   //displays at most 25 points between two locations
   getRoute () {
-    console.log('hello from getRoute');
     const { startLocation, endLocation } = this.state;
     axios.put('/route', {startLocation: startLocation, endLocation: endLocation})
       .then(result => {
@@ -64,17 +57,13 @@ class App extends React.Component {
         console.log(err);
       });
   }
-
+  //get coordinates from city name, zoom in on coordinates
   primarySearch () {
     const { searchInput } = this.state;
     let searchedCoord;
-
-    axios.get(`https://api.openrouteservice.org/geocode/search?api_key=${ORS_KEY}&text=${searchInput}`)
+    axios.put('/getcoord', {str: searchInput})
       .then(res => {
-        //console.log('this should also be an array, \n', res.data.features[0].geometry.coordinates);
-        searchedCoord = res.data.features[0].geometry.coordinates;
-        //console.log('please don\'t be undefined', searchedCoord);
-        this.setState({ center: {lat: searchedCoord[1], lng: searchedCoord[0]}, zoom: 10 });
+        this.setState({ center: {lat: res.data[1], lng: res.data[0]}, zoom: 10 });
       })
       .catch(err => console.log(err));
   }
@@ -122,7 +111,6 @@ class App extends React.Component {
             loadingElement={<div style={{ height: '80%'}} />}
             containerElement={<div style={{ height: '80%'}} />}
             mapElement={<div style={{ height: '80%'}} />}
-            test={'Hi, Im a Map Test'}
             zoom={this.state.zoom}
             center={this.state.center}
             route={this.state.routeArray}
@@ -131,7 +119,6 @@ class App extends React.Component {
         </div>
         <Information
           className="information-class"
-          test={'Hi, Im an Information Test'}
           searchInput={searchInput}
           center={this.state.center}
         />

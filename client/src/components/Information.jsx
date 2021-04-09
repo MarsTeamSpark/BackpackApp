@@ -19,9 +19,6 @@ class Information extends React.Component {
 
 
   render() {
-    // console.log('From Information.jsx:', this.props.searchInput);
-    //console.log(this.props.test);
-    //const { searchInput } = this.props;
     return (
       <div>
         <Safety
