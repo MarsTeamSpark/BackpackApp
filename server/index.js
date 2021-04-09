@@ -1,5 +1,6 @@
 /* eslint-disable no-console */
 const parks = require('./assets/data/nationalparksdata.json');
+const { Users, Couches } = require('./db.js');
 const axios = require('axios');
 require('dotenv').config();
 //console.log(process.env.GOOGLE_CLIENT_ID);
@@ -271,6 +272,80 @@ app.put('/walk', (req, res) => {
     });
 });
 
+
+/*************************
+ ******* DATABASE ********
+ *************************/
+
+
+//probably need to delete this when we're done using it for testing
+app.get('/users', (req, res) => {
+  Users.find((err) => {
+    if (err) {
+      console.log(err);
+    }
+  })
+    .then(data => {
+      console.log('client received user list');
+      res.send(data);
+    })
+    .catch(err => {
+      console.log('client did not receive user list');
+      res.send(err);
+    });
+});
+//find couches associated with
+app.get('/couches/:userid', (req, res) => {
+  Couches.find({userId: req.params.userid}, (err) => {
+    if (err) {
+      console.log(err);
+    }
+  })
+    .then(data => {
+      console.log('client received couch list');
+      res.send(data);
+    })
+    .catch(err => {
+      console.log('client did not receive couch list');
+      res.send(err);
+    });
+});
+
+app.post('/adduser', (req, res) => {
+  Users.find({id: req.body.id}, (err) => {
+    if (err) {
+      console.log(err);
+    }
+  })
+    .then(data => {
+      console.log('success');
+      if (data.length) {
+        res.send('user already exists');
+      } else {
+        Users.insertMany([{
+          id: req.body.id,
+          name: req.body.name,
+          email: req.body.email
+        }])
+          .then(res.send('user added'));
+      }
+    })
+    .catch(err => {
+      console.log('fail');
+      res.send(err);
+    });
+});
+
+app.post('/addcouch', (req, res) => {
+  Couches.insertMany([{
+    userId: req.body.userId,
+    name: req.body.name,
+    phone: req.body.phone,
+    address: req.body.address
+  }])
+    .then(res.send('couch added'))
+    .catch(res.send('couch add failed'));
+});
 
 app.listen(PORT, (() => {
   console.log(`Server listening at http://127.0.0.1:${PORT}`); //might want to alter this for deployment

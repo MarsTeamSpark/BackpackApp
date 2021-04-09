@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const { Schema, model } = mongoose;
 
-const mongoUri = 'mongodb://localhost/backpack';
+const mongoUri = 'mongodb://localhost/backpack';//might have to change localhost when we deploy
 mongoose.connect(mongoUri, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
