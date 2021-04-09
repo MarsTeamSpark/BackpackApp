@@ -15,7 +15,10 @@ const UserSchema = new Schema({
 });
 
 const CouchSchema = new Schema({
-
+  userId: {type: Number, required: true},
+  name: {type: String},
+  phone: {type: String},
+  address: {type: String}
 });
 
 module.exports = {
