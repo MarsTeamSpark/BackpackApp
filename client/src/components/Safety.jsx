@@ -40,14 +40,15 @@ class Safety extends React.Component {
   render() {
     return (
       <div >
-        <div className="Safety">
+        <div className="Safety"><h2>Covid Information:</h2>
           <SafetyData
             restrictions={this.state.restrictions}
             safetyIndex={this.state.safetyIndex}
             risk={this.state.risk}
           />
         </div>
-        <button onClick={() => this.getSafetyData()}>Get Info</button>
+        <br></br>
+        <button onClick={() => this.getSafetyData()}>Get Covid Info</button>
       </div>
     );
   }

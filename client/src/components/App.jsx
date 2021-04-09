@@ -9,7 +9,7 @@ import axios from 'axios';
 import Information from './Information.jsx';
 import Map from './Map.jsx';
 import Auth from './Auth.jsx';
-//const { mapKey } = require('../../../server/config');
+const { mapKey } = require('../../../server/config');
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -119,10 +119,15 @@ class App extends React.Component {
           <input type="text" name="end" className="input" placeholder="Choose Destination" onChange={handleEndChange}/>
           <button type="button" className="input" onClick={getRoute}>Get Route</button>
         </form>
-        <div style={{width: '50vw', height: '80vh'}}>
+        <Information
+          className="information-class"
+          searchInput={searchInput}
+          center={this.state.center}
+        />
+        <div style={{width: '90vw', height: '80vh'}}>
           <Map
             className="map"
-            googleMapURL={`https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places&key=`}
+            googleMapURL={`https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places&key=${mapKey}`}
             loadingElement={<div style={{ height: '80%'}} />}
             containerElement={<div style={{ height: '80%'}} />}
             mapElement={<div style={{ height: '80%'}} />}
@@ -133,11 +138,6 @@ class App extends React.Component {
             parks={this.state.parks}
           />
         </div>
-        <Information
-          className="information-class"
-          searchInput={searchInput}
-          center={this.state.center}
-        />
       </div>
     );
   }
