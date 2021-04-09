@@ -3,7 +3,7 @@ import { createGlobalStyle } from 'styled-components';
 export default createGlobalStyle`
     body {
         /* background: linear-gradient(35deg, rgba(56,127,117, 1) 0%, rgba(123,188,182, 1) 35%, rgba(152,228,217, 1) 100%); */
-        background-color: rgba(124,196,185);
+        background-color: rgb(56,127,117);
         font-family: "Lucida Console", "Courier New", monospace;
 
     }
@@ -11,15 +11,6 @@ export default createGlobalStyle`
         width: 100%;
         height: auto;
         display: block;
-    }
-    .map {
-
-    }
-    .input {
- 
-    }
-    .information-class {
-        
     }
     button{
         outline: none;
@@ -48,7 +39,7 @@ export default createGlobalStyle`
         }
     }
     h1 {
-        
+        float: left;
     }
     h2 {
         
