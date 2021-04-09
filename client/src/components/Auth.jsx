@@ -21,7 +21,7 @@ class Auth extends React.Component {
   componentDidMount() {
     return axios.get('/testing') //checks to see if user is logged in
       .then(data => {
-        //console.log(data.data);
+        console.log(data.data);
         if (data.data.displayName) {
           this.setState({credentials: <a href="/logout"> Logout </a>, isLoggedIn: true, username: data.data.displayName, email: data.data.email, id: data.data.id, message: 'Logged in as '});
         } else {

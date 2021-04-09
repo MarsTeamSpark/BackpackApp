@@ -9,7 +9,9 @@ mongoose.connect(mongoUri, {
 });
 
 const UserSchema = new Schema({
-
+  id: {type: Number, required: true },
+  name: {type: String},
+  email: {type: String}
 });
 
 const CouchSchema = new Schema({
