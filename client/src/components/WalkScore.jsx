@@ -4,7 +4,7 @@ import React from 'react';
 // import PropTypes from 'prop-types';
 // import ReactDOM from 'react-dom';
 import axios from 'axios';
-const { rapidApiKey, walkScoreKey } = require('../../../server/config.js');
+//const { rapidApiKey, walkScoreKey } = require('../../../server/config.js');
 
 class WalkScore extends React.Component {
   constructor(props) {
@@ -21,25 +21,9 @@ class WalkScore extends React.Component {
   }
 
   getWalkScore() {
-    const options = {
-      method: 'GET',
-      url: 'https://walk-score.p.rapidapi.com/score',
-      params: {
-        lon: this.props.center.lng,
-        lat: this.props.center.lat,
-        address: 'https://api.walkscore.com/score',
-        wsapikey: walkScoreKey,
-        transit: '1',
-        bike: '1',
-        format: 'json'
-      },
-      headers: {
-        'x-rapidapi-key': rapidApiKey,
-        'x-rapidapi-host': 'walk-score.p.rapidapi.com'
-      }
-    };
-
-    axios.request(options).then((response) => {
+    console.log('hello from walkscore');
+    console.log(this.props.center);
+    axios.put('/walk', this.props.center).then((response) => {
       //console.log(response.data);
       this.setState({
         walkScore: response.data.walkscore,
@@ -62,14 +46,14 @@ class WalkScore extends React.Component {
   render() {
     return (
       <div >
-        <div className="Safety"> Tight Walkability Data! </div>
-        <div>Walk Score: {this.state.walkScore}</div>
-        <div>Walk Description: {this.state.walkDescription}</div>
-        <div>Transit Score: {this.state.transitScore}</div>
-        <div>Transit Description: {this.state.transitDescription}</div>
-        <div>Bike Score: {this.state.bikeScore}</div>
-        <div>Bike Description: {this.state.bikeDescription}</div>
-
+        <div className="Safety"> <h2>Walkability:</h2> </div>
+        <div><h3>Walk Score:</h3> {this.state.walkScore}</div>
+        <div><h3>Walk Description:</h3> {this.state.walkDescription}</div>
+        <div><h3>Transit Score:</h3> {this.state.transitScore}</div>
+        <div><h3>Transit Description:</h3> {this.state.transitDescription}</div>
+        <div><h3>Bike Score:</h3> {this.state.bikeScore}</div>
+        <div><h3>Bike Description:</h3> {this.state.bikeDescription}</div>
+        <br></br>
         <button onClick={() => this.getWalkScore()}>Get Walk Score</button>
       </div>
     );

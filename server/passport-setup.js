@@ -1,6 +1,12 @@
 /* eslint-disable no-console */
+require('dotenv').config();
 const passport = require('passport');
-const { GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET, GOOGLE_CALLBACK_URL} = require ('./config.js');
+//const { GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET, GOOGLE_CALLBACK_URL} = require ('./config.js');
+//console.log('hello from passportsetup');
+//console.log(process.env.GOOGLE_CLIENT_ID);
+const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID;
+const GOOGLE_CLIENT_SECRET = process.env.GOOGLE_CLIENT_SECRET;
+const GOOGLE_CALLBACK_URL = process.env.GOOGLE_CALLBACK_URL;
 
 const GoogleStrategy = require('passport-google-oauth2').Strategy;
 

@@ -15,9 +15,9 @@ class SafetyData extends React.Component {
   render() {
     return (
       <div>
-        <div>Restrictions: {this.props.restrictions}</div>
-        <div>Safety Index: {this.props.safetyIndex}</div>
-        <div>Risk: {this.props.risk}</div>
+        <div><h3>Restrictions:</h3> {this.props.restrictions}</div>
+        <div><h3>Covid Safety Index:</h3> {this.props.safetyIndex}</div>
+        <div><h3>Covid Risk:</h3> {this.props.risk}</div>
       </div>
     );
   }
