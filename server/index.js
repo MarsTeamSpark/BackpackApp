@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-const parks = require('./assets/data/nationalparksdata.json')
+const parks = require('./assets/data/nationalparksdata.json');
 const axios = require('axios');
 require('dotenv').config();
 console.log(process.env.GOOGLE_CLIENT_ID);
