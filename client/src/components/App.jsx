@@ -33,6 +33,9 @@ class App extends React.Component {
     this.coordinateToString = this.coordinateToString.bind(this);
     this.getNationalParks = this.getNationalParks.bind(this);
   }
+
+  //let us implement our couches
+
   componentDidMount() {
     this.getNationalParks();
   }
