@@ -241,42 +241,6 @@ app.put('/covid', (req, res) => {
     });
 });
 
-/**
- *   getWalkScore() {
-      const options = {
-      method: 'GET',
-      url: 'https://walk-score.p.rapidapi.com/score',
-      params: {
-        lon: this.props.center.lng,
-        lat: this.props.center.lat,
-        address: 'https://api.walkscore.com/score',
-        wsapikey: walkScoreKey,
-        transit: '1',
-        bike: '1',
-        format: 'json'
-      },
-      headers: {
-        'x-rapidapi-key': rapidApiKey,
-        'x-rapidapi-host': 'walk-score.p.rapidapi.com'
-      }
-    };
-
-    axios.request(options).then((response) => {
-      //console.log(response.data);
-      this.setState({
-        walkScore: response.data.walkscore,
-        walkDescription: response.data.description,
-        transitScore: response.data.transit.score,
-        transitDescription: response.data.transit.description,
-        bikeScore: response.data.bike.score,
-        bikeDescription: response.data.bike.description
-      });
-    })
-      .catch((error) => {
-        console.error(error);
-      });
-  }
- */
 
 //get walkability, bikability stats for given coordinates
 app.put('/walk', (req, res) => {
@@ -299,15 +263,6 @@ app.put('/walk', (req, res) => {
   };
 
   axios.request(options).then((response) => {
-    //console.log(response.data);
-    // this.setState({
-    //   walkScore: response.data.walkscore,
-    //   walkDescription: response.data.description,
-    //   transitScore: response.data.transit.score,
-    //   transitDescription: response.data.transit.description,
-    //   bikeScore: response.data.bike.score,
-    //   bikeDescription: response.data.bike.description
-    // });
     console.log(response);
     res.send(response.data);
   })

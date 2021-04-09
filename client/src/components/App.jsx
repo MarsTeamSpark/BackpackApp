@@ -9,7 +9,7 @@ import axios from 'axios';
 import Information from './Information.jsx';
 import Map from './Map.jsx';
 import Auth from './Auth.jsx';
-const { mapKey } = require('../../../server/config');
+//const { mapKey } = require('../../../server/config');
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -122,7 +122,7 @@ class App extends React.Component {
         <div style={{width: '50vw', height: '80vh'}}>
           <Map
             className="map"
-            googleMapURL={`https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places&key=${mapKey}`}
+            googleMapURL={`https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places&key=`}
             loadingElement={<div style={{ height: '80%'}} />}
             containerElement={<div style={{ height: '80%'}} />}
             mapElement={<div style={{ height: '80%'}} />}
