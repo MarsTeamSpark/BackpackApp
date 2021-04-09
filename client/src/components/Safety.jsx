@@ -4,7 +4,7 @@
 import React from 'react';
 import axios from 'axios';
 import SafetyData from './SafetyData.jsx';
-const { rapidApiKey } = require('../../../server/config.js');
+//const { rapidApiKey } = require('../../../server/config.js');
 class Safety extends React.Component {
   constructor(props) {
     super(props);
@@ -19,18 +19,9 @@ class Safety extends React.Component {
 
   getSafetyData() {
     //const { searchInput } = this.props;
-    const options = {
-      method: 'GET',
-      url: 'https://safe-travel-covid-index.p.rapidapi.com/safeindex',
-      params: {place: `${this.props.searchInput}, USA`, lang: 'en'},
-      headers: {
-        'x-rapidapi-key': rapidApiKey,
-        'x-rapidapi-host': 'safe-travel-covid-index.p.rapidapi.com'
-      }
-    };
-
-    axios.request(options).then((response) => {
-      console.log(response.data);
+    console.log('hello from getSafetyData');
+    axios.put('/covid', {searchInput: this.props.searchInput }).then((response) => {
+      //console.log(response.data);
       this.setState({
         restrictions: response.data.restrictions,
         safetyIndex: response.data.safety_index,

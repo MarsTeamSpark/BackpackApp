@@ -3,10 +3,10 @@
 import React, { useState } from 'react';
 import { GoogleMap, withScriptjs, withGoogleMap, Marker, InfoWindow } from 'react-google-maps';
 //getting started with render parks
-import * as parksData from '../../src/nationalparksdata.json';
 const WrapMe = function(props) {
   const [selectedPark, setSelectedPark] = useState(null);
-  //console.log(props.reCenter);
+  // eslint-disable-next-line react/destructuring-assignment
+  const parksData = props.parks;
   return (
     <GoogleMap
       // eslint-disable-next-line react/destructuring-assignment
@@ -26,7 +26,6 @@ const WrapMe = function(props) {
             setSelectedPark(park);
           }}
           icon={{
-            //url: 'https://static.thenounproject.com/png/7444-200.png',
             //url: '/assets/img/couch.svg',
             url: '/assets/img/tree.png',
             // eslint-disable-next-line no-undef
