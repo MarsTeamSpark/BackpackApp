@@ -3,6 +3,7 @@ const parks = require('./assets/data/nationalparksdata.json');
 const axios = require('axios');
 require('dotenv').config();
 console.log(process.env.GOOGLE_CLIENT_ID);
+console.log(process.env.civics_key);
 const ORS_KEY = process.env.ORS_KEY;
 const path = require('path');
 const express = require('express');
@@ -145,6 +146,148 @@ app.put('/route', (req, res) => {
 app.get('/parks', (req, res) => {
   //res.send('parks');
   res.send(parks);
+});
+
+/**
+ * getCivicsInformation() {
+    //console.log('hello from get request');
+    const config = {
+      method: 'get',
+      url: `https://www.googleapis.com/civicinfo/v2/representatives?key=${civics_key}&address=${this.props.searchInput}`,
+      headers: { }
+    };
+
+    axios.request(config)
+      .then(res => {
+        //console.log(res);
+        const senatorObjs = [];
+        for (let i = 0; i < res.data.offices.length; i++) {
+          const index = res.data.offices[i];
+          let phoneNum = 'Not Found';
+          if (index.name === 'U.S. Senator') {
+            for (let j = 0; j < index.officialIndices.length; j++) {
+              if (res.data.officials[index.officialIndices[j]].phones) {
+                phoneNum = res.data.officials[index.officialIndices[j]].phones[0];
+              } else {
+                phoneNum = 'Not Found';
+              }
+              senatorObjs.push({
+                image: res.data.officials[index.officialIndices[j]].photoUrl,
+                name: res.data.officials[index.officialIndices[j]].name,
+                position: 'United States Senate',
+                party: res.data.officials[index.officialIndices[j]].party,
+                phone: phoneNum,
+              });
+            }
+          } else if (index.name === 'U.S. Representative') {
+            for (let h = 0; h < index.officialIndices.length; h++) {
+              if (res.data.officials[index.officialIndices[h]].phones) {
+                phoneNum = res.data.officials[index.officialIndices[h]].phones[0];
+              } else {
+                phoneNum = 'Not Found';
+              }
+              senatorObjs.push({
+                image: res.data.officials[index.officialIndices[h]].photoUrl,
+                name: res.data.officials[index.officialIndices[h]].name,
+                position: 'United States House of Representatives',
+                party: res.data.officials[index.officialIndices[h]].party,
+                phone: phoneNum,
+              });
+            }
+          } else if (index.name.includes('Mayor')) {
+            for (let k = 0; k < index.officialIndices.length; k++) {
+              if (res.data.officials[index.officialIndices[k]].phones) {
+                phoneNum = res.data.officials[index.officialIndices[k]].phones[0];
+              } else {
+                phoneNum = 'Not Found';
+              }
+              senatorObjs.push({
+                name: res.data.officials[index.officialIndices[k]].name,
+                position: 'Office of the Mayor',
+                party: res.data.officials[index.officialIndices[k]].party,
+                phone: phoneNum,
+              });
+            }
+          }
+        }
+        this.setState({
+          senators: senatorObjs,
+        });
+      })
+      .catch(err => {
+        console.log(err);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  }
+ */
+
+app.put('/civic', (req, resp) => {
+  const config = {
+    method: 'get',
+    url: `https://www.googleapis.com/civicinfo/v2/representatives?key=${process.env.civics_key}&address=${req.body.searchInput}`,
+    headers: { }
+  };
+
+  axios.request(config)
+    .then(res => {
+      //console.log(res);
+      const senatorObjs = [];
+      for (let i = 0; i < res.data.offices.length; i++) {
+        const index = res.data.offices[i];
+        let phoneNum = 'Not Found';
+        if (index.name === 'U.S. Senator') {
+          for (let j = 0; j < index.officialIndices.length; j++) {
+            if (res.data.officials[index.officialIndices[j]].phones) {
+              phoneNum = res.data.officials[index.officialIndices[j]].phones[0];
+            } else {
+              phoneNum = 'Not Found';
+            }
+            senatorObjs.push({
+              image: res.data.officials[index.officialIndices[j]].photoUrl,
+              name: res.data.officials[index.officialIndices[j]].name,
+              position: 'United States Senate',
+              party: res.data.officials[index.officialIndices[j]].party,
+              phone: phoneNum,
+            });
+          }
+        } else if (index.name === 'U.S. Representative') {
+          for (let h = 0; h < index.officialIndices.length; h++) {
+            if (res.data.officials[index.officialIndices[h]].phones) {
+              phoneNum = res.data.officials[index.officialIndices[h]].phones[0];
+            } else {
+              phoneNum = 'Not Found';
+            }
+            senatorObjs.push({
+              image: res.data.officials[index.officialIndices[h]].photoUrl,
+              name: res.data.officials[index.officialIndices[h]].name,
+              position: 'United States House of Representatives',
+              party: res.data.officials[index.officialIndices[h]].party,
+              phone: phoneNum,
+            });
+          }
+        } else if (index.name.includes('Mayor')) {
+          for (let k = 0; k < index.officialIndices.length; k++) {
+            if (res.data.officials[index.officialIndices[k]].phones) {
+              phoneNum = res.data.officials[index.officialIndices[k]].phones[0];
+            } else {
+              phoneNum = 'Not Found';
+            }
+            senatorObjs.push({
+              name: res.data.officials[index.officialIndices[k]].name,
+              position: 'Office of the Mayor',
+              party: res.data.officials[index.officialIndices[k]].party,
+              phone: phoneNum,
+            });
+          }
+        }
+      }
+      resp.send(senatorObjs);
+    })
+    .catch(err => {
+      resp.send(err);
+    });
 });
 
 app.listen(PORT, (() => {

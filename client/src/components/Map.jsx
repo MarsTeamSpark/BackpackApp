@@ -5,7 +5,6 @@ import { GoogleMap, withScriptjs, withGoogleMap, Marker, InfoWindow } from 'reac
 //getting started with render parks
 const WrapMe = function(props) {
   const [selectedPark, setSelectedPark] = useState(null);
-  console.log('hello from map');
   // eslint-disable-next-line react/destructuring-assignment
   const parksData = props.parks;
   return (
