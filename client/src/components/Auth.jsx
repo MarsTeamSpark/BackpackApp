@@ -3,6 +3,11 @@
 /* eslint-disable no-console */
 import React from 'react';
 import axios from 'axios';
+import styled from 'styled-components';
+
+const AuthStyle = styled.div`
+
+`;
 class Auth extends React.Component {
   constructor(props) {
     super(props);
@@ -21,7 +26,7 @@ class Auth extends React.Component {
   componentDidMount() {
     return axios.get('/testing') //checks to see if user is logged in
       .then(data => {
-        //console.log(data.data);
+        console.log(data.data);
         if (data.data.displayName) {
           this.setState({credentials: <a href="/logout"> Logout </a>, isLoggedIn: true, username: data.data.displayName, email: data.data.email, id: data.data.id, message: 'Logged in as '});
         } else {
@@ -35,10 +40,12 @@ class Auth extends React.Component {
 
   render() {
     return (
-      <div>
-        <p>{this.state.message} {this.state.username}</p>
-        {this.state.credentials}
-      </div>
+      <AuthStyle>
+        <div>
+          <h3>{this.state.message} {this.state.username}</h3>
+          <h2>{this.state.credentials}</h2>
+        </div>
+      </AuthStyle>
     );
   }
 }

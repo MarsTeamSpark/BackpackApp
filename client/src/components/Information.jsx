@@ -15,8 +15,8 @@ const InfoBox = styled.div`
         text-align: left;
         border-radius: 2px;
         padding: 40px;
-        width: 535px;
-        height: 400px;
+        width: 25vw;
+        height: 25vw;
         overflow-x: hidden;
         overflow-y: scroll;
         box-shadow:1px 1px 1px 1px gray;
