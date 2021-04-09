@@ -25,7 +25,7 @@ class Civics extends React.Component {
 
   getCivicsInformation() {
     //console.log('hello from getCivicsInfo');
-    axios.put('/civic', {searchInput: this.props.searchInput})
+    axios.put('/civic', {searchInput: this.props.searchInput || 'United States'})
       .then(response => {
         //console.log(response.data);
         this.setState({
@@ -41,24 +41,24 @@ class Civics extends React.Component {
     const { senators } = this.state;
     return (
       <div>
+        <h2>Local Politics: </h2>
         <div className="Senators">
-          {
-            senators.map(sen => (
-              <Reps
-                image={sen.image}
-                name={sen.name}
-                position={sen.position}
-                party={sen.party}
-                phone={sen.phone}
-              />
-            ))
+          { senators.map(sen => (
+            <Reps
+              image={sen.image}
+              name={sen.name}
+              position={sen.position}
+              party={sen.party}
+              phone={sen.phone}
+            />
+          ))
           }
         </div>
         <button onClick={() =>
 
           this.getCivicsInformation()
 
-        }>Get Civic Info</button>
+        }>Get Local Politics</button>
       </div>
     );
   }

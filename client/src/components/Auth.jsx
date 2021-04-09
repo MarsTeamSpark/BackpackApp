@@ -3,6 +3,11 @@
 /* eslint-disable no-console */
 import React from 'react';
 import axios from 'axios';
+import styled from 'styled-components';
+
+const AuthStyle = styled.div`
+
+`;
 class Auth extends React.Component {
   constructor(props) {
     super(props);
@@ -35,10 +40,12 @@ class Auth extends React.Component {
 
   render() {
     return (
-      <div>
-        <p>{this.state.message} {this.state.username}</p>
-        {this.state.credentials}
-      </div>
+      <AuthStyle>
+        <div>
+          <h3>{this.state.message} {this.state.username}</h3>
+          <h2>{this.state.credentials}</h2>
+        </div>
+      </AuthStyle>
     );
   }
 }
