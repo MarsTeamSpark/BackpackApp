@@ -31,7 +31,6 @@ class App extends React.Component {
     this.getRoute = this.getRoute.bind(this);
     this.handleEndChange = this.handleEndChange.bind(this);
     this.handleStartChange = this.handleStartChange.bind(this);
-    this.getCoordinates = this.getCoordinates.bind(this);
     this.handleSearchChange = this.handleSearchChange.bind(this);
     this.primarySearch = this.primarySearch.bind(this);
     this.reCenter = this.reCenter.bind(this);
@@ -62,17 +61,6 @@ class App extends React.Component {
         this.setState({ routeArray: result.data });
       })
       .catch( err => {
-        console.log(err);
-      });
-  }
-
-  getCoordinates (str) {
-    return axios.get(`https://api.openrouteservice.org/geocode/search?api_key=${ORS_KEY}&text=${str}`)
-      .then(res => {
-        //console.log('this should be an array', res.data.features[0].geometry.coordinates);
-        return res.data.features[0].geometry.coordinates;
-      })
-      .catch(err => {
         console.log(err);
       });
   }
