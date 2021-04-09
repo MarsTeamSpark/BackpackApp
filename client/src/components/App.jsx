@@ -54,47 +54,15 @@ class App extends React.Component {
   }
   //displays at most 25 points between two locations
   getRoute () {
+    console.log('hello from getRoute');
     const { startLocation, endLocation } = this.state;
-    let startCoordinates;
-    let endCoordinates;
-    this.getCoordinates(startLocation)
-      .then(arr => {
-        //console.log('this should be the starting locations coordinates \n', arr);
-        startCoordinates = arr;
-        //console.log('these are the starting coordinates', startCoordinates);
+    axios.put('/route', {startLocation: startLocation, endLocation: endLocation})
+      .then(result => {
+        console.log(result.data);
+        this.setState({ routeArray: result.data });
       })
-      .then(() => {
-        this.getCoordinates(endLocation)
-          .then(arr => {
-            //console.log('this should be the end location coordinates \n', arr);
-            endCoordinates = arr;
-            //console.log('these are the end coordinates', endCoordinates);
-          })
-          .then(() => {
-            axios.get(`https://api.openrouteservice.org/v2/directions/driving-car?api_key=${ORS_KEY}&start=${startCoordinates}&end=${endCoordinates}`)
-              .then(response => {
-                //console.log(response.data);
-                //console.log(JSON.stringify(response.data.features[0].geometry.coordinates));
-                let coorArray = response.data.features[0].geometry.coordinates;
-                let placeHolder = [];
-                while (coorArray.length > 25) {
-                  //console.log(`array length = ${coorArray.length}`);
-                  for (let i = 0; i < coorArray.length; i += 2) {
-                    placeHolder.push(coorArray[i]);
-                  }
-                  coorArray = placeHolder;
-                  placeHolder = [];
-                }
-                //console.log(coorArray);
-                this.setState({ routeArray: coorArray });
-              })
-              .catch(function (error) {
-                console.log(error);
-              });
-          })
-          .catch(err => {
-            console.log(err);
-          });
+      .catch( err => {
+        console.log(err);
       });
   }
 
