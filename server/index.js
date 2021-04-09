@@ -2,9 +2,12 @@
 const parks = require('./assets/data/nationalparksdata.json');
 const axios = require('axios');
 require('dotenv').config();
-console.log(process.env.GOOGLE_CLIENT_ID);
-console.log(process.env.civics_key);
+//console.log(process.env.GOOGLE_CLIENT_ID);
+//console.log(process.env.civics_key);
 const ORS_KEY = process.env.ORS_KEY;
+const CIVICS_KEY = process.env.civics_key;
+const rapidApiKey = process.env.rapidApiKey;
+const walkScoreKey = process.env.WALKSCORE_KEY;
 const path = require('path');
 const express = require('express');
 const passport = require('passport');
@@ -67,7 +70,7 @@ app.get('/failed', (req, res) => {
  ******* API STUFF *******
  *************************/
 
-//convert latitude, longitude coordinates into city, state string
+//convert latitude, longitude coordinates into name of city
 app.put('/coordstring', (req, res) => {
   axios.get(`https://api.openrouteservice.org/geocode/reverse?api_key=${ORS_KEY}&point.lon=${req.body.lng}&point.lat=${req.body.lat}`)
     .then(data => {
@@ -143,90 +146,17 @@ app.put('/route', (req, res) => {
     });
 });
 
+//get national parks
 app.get('/parks', (req, res) => {
   //res.send('parks');
   res.send(parks);
 });
 
-/**
- * getCivicsInformation() {
-    //console.log('hello from get request');
-    const config = {
-      method: 'get',
-      url: `https://www.googleapis.com/civicinfo/v2/representatives?key=${civics_key}&address=${this.props.searchInput}`,
-      headers: { }
-    };
-
-    axios.request(config)
-      .then(res => {
-        //console.log(res);
-        const senatorObjs = [];
-        for (let i = 0; i < res.data.offices.length; i++) {
-          const index = res.data.offices[i];
-          let phoneNum = 'Not Found';
-          if (index.name === 'U.S. Senator') {
-            for (let j = 0; j < index.officialIndices.length; j++) {
-              if (res.data.officials[index.officialIndices[j]].phones) {
-                phoneNum = res.data.officials[index.officialIndices[j]].phones[0];
-              } else {
-                phoneNum = 'Not Found';
-              }
-              senatorObjs.push({
-                image: res.data.officials[index.officialIndices[j]].photoUrl,
-                name: res.data.officials[index.officialIndices[j]].name,
-                position: 'United States Senate',
-                party: res.data.officials[index.officialIndices[j]].party,
-                phone: phoneNum,
-              });
-            }
-          } else if (index.name === 'U.S. Representative') {
-            for (let h = 0; h < index.officialIndices.length; h++) {
-              if (res.data.officials[index.officialIndices[h]].phones) {
-                phoneNum = res.data.officials[index.officialIndices[h]].phones[0];
-              } else {
-                phoneNum = 'Not Found';
-              }
-              senatorObjs.push({
-                image: res.data.officials[index.officialIndices[h]].photoUrl,
-                name: res.data.officials[index.officialIndices[h]].name,
-                position: 'United States House of Representatives',
-                party: res.data.officials[index.officialIndices[h]].party,
-                phone: phoneNum,
-              });
-            }
-          } else if (index.name.includes('Mayor')) {
-            for (let k = 0; k < index.officialIndices.length; k++) {
-              if (res.data.officials[index.officialIndices[k]].phones) {
-                phoneNum = res.data.officials[index.officialIndices[k]].phones[0];
-              } else {
-                phoneNum = 'Not Found';
-              }
-              senatorObjs.push({
-                name: res.data.officials[index.officialIndices[k]].name,
-                position: 'Office of the Mayor',
-                party: res.data.officials[index.officialIndices[k]].party,
-                phone: phoneNum,
-              });
-            }
-          }
-        }
-        this.setState({
-          senators: senatorObjs,
-        });
-      })
-      .catch(err => {
-        console.log(err);
-      })
-      .catch(error => {
-        console.log(error);
-      });
-  }
- */
-
+//get government officials for area
 app.put('/civic', (req, resp) => {
   const config = {
     method: 'get',
-    url: `https://www.googleapis.com/civicinfo/v2/representatives?key=${process.env.civics_key}&address=${req.body.searchInput}`,
+    url: `https://www.googleapis.com/civicinfo/v2/representatives?key=${CIVICS_KEY}&address=${req.body.searchInput}`,
     headers: { }
   };
 
@@ -289,6 +219,106 @@ app.put('/civic', (req, resp) => {
       resp.send(err);
     });
 });
+
+//get covid related info for area
+app.put('/covid', (req, res) => {
+  const options = {
+    method: 'GET',
+    url: 'https://safe-travel-covid-index.p.rapidapi.com/safeindex',
+    params: {place: `${req.body.searchInput}, USA`, lang: 'en'},
+    headers: {
+      'x-rapidapi-key': rapidApiKey,
+      'x-rapidapi-host': 'safe-travel-covid-index.p.rapidapi.com'
+    }
+  };
+  axios.request(options).then((response) => {
+    console.log(response.data);
+    res.send(response.data);
+  })
+    .catch(err => {
+      console.log('fail');
+      res.send(err);
+    });
+});
+
+/**
+ *   getWalkScore() {
+      const options = {
+      method: 'GET',
+      url: 'https://walk-score.p.rapidapi.com/score',
+      params: {
+        lon: this.props.center.lng,
+        lat: this.props.center.lat,
+        address: 'https://api.walkscore.com/score',
+        wsapikey: walkScoreKey,
+        transit: '1',
+        bike: '1',
+        format: 'json'
+      },
+      headers: {
+        'x-rapidapi-key': rapidApiKey,
+        'x-rapidapi-host': 'walk-score.p.rapidapi.com'
+      }
+    };
+
+    axios.request(options).then((response) => {
+      //console.log(response.data);
+      this.setState({
+        walkScore: response.data.walkscore,
+        walkDescription: response.data.description,
+        transitScore: response.data.transit.score,
+        transitDescription: response.data.transit.description,
+        bikeScore: response.data.bike.score,
+        bikeDescription: response.data.bike.description
+      });
+    })
+      .catch((error) => {
+        console.error(error);
+      });
+  }
+ */
+
+
+/*****
+ * THIS DOES NOT WORK. RANDOLPH, PLEASE FIX THIS
+ *****/
+app.put('/walk', (req, res) => {
+  const options = {
+    method: 'GET',
+    url: 'https://walk-score.p.rapidapi.com/score',
+    params: {
+      lon: req.body.lng,
+      lat: req.body.lat,
+      address: 'https://api.walkscore.com/score',
+      wsapikey: walkScoreKey,
+      transit: '1',
+      bike: '1',
+      format: 'json'
+    },
+    headers: {
+      'x-rapidapi-key': rapidApiKey,
+      'x-rapidapi-host': 'walk-score.p.rapidapi.com'
+    }
+  };
+
+  axios.request(options).then((response) => {
+    //console.log(response.data);
+    // this.setState({
+    //   walkScore: response.data.walkscore,
+    //   walkDescription: response.data.description,
+    //   transitScore: response.data.transit.score,
+    //   transitDescription: response.data.transit.description,
+    //   bikeScore: response.data.bike.score,
+    //   bikeDescription: response.data.bike.description
+    // });
+    console.log(response);
+    res.send(response.data);
+  })
+    .catch((error) => {
+      res.send(error);
+    });
+});
+
 
 app.listen(PORT, (() => {
   console.log(`Server listening at http://127.0.0.1:${PORT}`); //might want to alter this for deployment

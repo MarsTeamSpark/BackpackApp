@@ -21,6 +21,8 @@ class WalkScore extends React.Component {
   }
 
   getWalkScore() {
+    console.log('hello from walkscore');
+    console.log(this.props.center);
     const options = {
       method: 'GET',
       url: 'https://walk-score.p.rapidapi.com/score',

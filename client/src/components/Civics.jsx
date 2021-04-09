@@ -10,7 +10,7 @@ import React from 'react';
 import axios from 'axios';
 import Reps from './Reps.jsx';
 
-const { civics_key } = require('../../../server/config.js');
+//const { civics_key } = require('../../../server/config.js');
 
 class Civics extends React.Component {
   constructor(props) {
