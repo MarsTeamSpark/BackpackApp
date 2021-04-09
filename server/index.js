@@ -1,4 +1,5 @@
 /* eslint-disable no-console */
+const parks = require('./assets/data/nationalparksdata.json')
 const axios = require('axios');
 require('dotenv').config();
 console.log(process.env.GOOGLE_CLIENT_ID);
@@ -21,7 +22,7 @@ app.use(cookieSession({
 app.use(passport.initialize());
 
 app.use(passport.session());
-app.use(express.json()); //we'll need this when we start handling http requests
+app.use(express.json());
 app.use(express.static(CLIENT_PATH));
 app.use('/assets', express.static(ASSETS_PATH));
 const PORT = 8080;
@@ -139,6 +140,11 @@ app.put('/route', (req, res) => {
             });
         });
     });
+});
+
+app.get('/parks', (req, res) => {
+  //res.send('parks');
+  res.send(parks);
 });
 
 app.listen(PORT, (() => {

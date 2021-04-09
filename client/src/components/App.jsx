@@ -19,7 +19,8 @@ class App extends React.Component {
       searchInput: '',
       zoom: 4,
       center: { lat: 37.0902, lng: -95.7129 },
-      routeArray: []
+      routeArray: [],
+      parks: []
     };
     // BIND YOUR METHODS
     this.getRoute = this.getRoute.bind(this);
@@ -29,8 +30,22 @@ class App extends React.Component {
     this.primarySearch = this.primarySearch.bind(this);
     this.reCenter = this.reCenter.bind(this);
     this.coordinateToString = this.coordinateToString.bind(this);
+    this.getNationalParks = this.getNationalParks.bind(this);
   }
-  //sets center from coordinates
+  componentDidMount() {
+    this.getNationalParks();
+  }
+
+  getNationalParks() {
+    axios.get('/parks')
+      .then((res) => {
+        this.setState({parks: res.data});
+      })
+      .catch (err => {
+        console.log(err);
+      });
+  }
+
   reCenter (latitude, longitude, zm) {
     this.setState({center: { lat: latitude, lng: longitude}, zoom: zm});
     this.coordinateToString(latitude, longitude);
@@ -115,6 +130,7 @@ class App extends React.Component {
             center={this.state.center}
             route={this.state.routeArray}
             reCenter={this.reCenter}
+            parks={this.state.parks}
           />
         </div>
         <Information
