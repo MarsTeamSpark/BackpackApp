@@ -19,7 +19,6 @@ class Auth extends React.Component {
   }
 
   componentDidMount() {
-    console.log('hello from auth');
     return axios.get('/testing') //checks to see if user is logged in
       .then(data => {
         //console.log(data.data);

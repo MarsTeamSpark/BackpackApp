@@ -5,128 +5,81 @@
 /* eslint-disable react/destructuring-assignment */
 import React from 'react';
 import axios from 'axios';
-const { ORS_KEY } = require('../../../server/config.js');
-// import PropTypes from 'prop-types';
-// import ReactDOM from 'react-dom';
+//const { ORS_KEY } = require('../../../server/config.js');
 import Information from './Information.jsx';
 import Map from './Map.jsx';
 import Auth from './Auth.jsx';
-const { mapKey } = require('../../../server/config');
+// const { mapKey } = require('../../../server/config');
 class App extends React.Component {
   constructor(props) {
     super(props);
-    /**
-     * defaultZoom={4}
-     * defaultCenter={{ lat: 37.0902, lng: -95.7129 }}
-     */
     this.state = {
       startLocation: '',
       endLocation: '',
       searchInput: '',
       zoom: 4,
       center: { lat: 37.0902, lng: -95.7129 },
-      routeArray: []
+      routeArray: [],
+      parks: []
     };
     // extra little comment
     // BIND YOUR METHODS
     this.getRoute = this.getRoute.bind(this);
     this.handleEndChange = this.handleEndChange.bind(this);
     this.handleStartChange = this.handleStartChange.bind(this);
-    this.getCoordinates = this.getCoordinates.bind(this);
     this.handleSearchChange = this.handleSearchChange.bind(this);
     this.primarySearch = this.primarySearch.bind(this);
     this.reCenter = this.reCenter.bind(this);
     this.coordinateToString = this.coordinateToString.bind(this);
+    this.getNationalParks = this.getNationalParks.bind(this);
+  }
+  componentDidMount() {
+    this.getNationalParks();
+  }
+
+  getNationalParks() {
+    axios.get('/parks')
+      .then((res) => {
+        this.setState({parks: res.data});
+      })
+      .catch (err => {
+        console.log(err);
+      });
   }
 
   reCenter (latitude, longitude, zm) {
     this.setState({center: { lat: latitude, lng: longitude}, zoom: zm});
-    //console.log(latitude);
-    //console.log(longitude);
-    //console.log(zm);
     this.coordinateToString(latitude, longitude);
   }
-
+  // sets searchInput in to city name from coordinates
   coordinateToString(latitude, longitude) {
-    axios.get(`https://api.openrouteservice.org/geocode/reverse?api_key=${ORS_KEY}&point.lon=${longitude}&point.lat=${latitude}`)
-      .then(data => {
-        //console.log(JSON.stringify(data.data.features[0].properties.locality));
-        //console.log(JSON.stringify(data.data.features[0].properties.region));
-        const city = JSON.stringify(data.data.features[0].properties.locality);
-        const state = JSON.stringify(data.data.features[0].properties.region);
-        this.setState({searchInput: city + ', ' + state});
-      })
-      .catch(error => {
-        console.log(error);
-      });
-  }
-
-  getRoute () {
-    const { startLocation, endLocation } = this.state;
-    let startCoordinates;
-    let endCoordinates;
-    this.getCoordinates(startLocation)
-      .then(arr => {
-        //console.log('this should be the starting locations coordinates \n', arr);
-        startCoordinates = arr;
-        //console.log('these are the starting coordinates', startCoordinates);
-      })
-      .then(() => {
-        this.getCoordinates(endLocation)
-          .then(arr => {
-            //console.log('this should be the end location coordinates \n', arr);
-            endCoordinates = arr;
-            //console.log('these are the end coordinates', endCoordinates);
-          })
-          .then(() => {
-            axios.get(`https://api.openrouteservice.org/v2/directions/driving-car?api_key=${ORS_KEY}&start=${startCoordinates}&end=${endCoordinates}`)
-              .then(response => {
-                //console.log(response.data);
-                //console.log(JSON.stringify(response.data.features[0].geometry.coordinates));
-                let coorArray = response.data.features[0].geometry.coordinates;
-                let placeHolder = [];
-                while (coorArray.length > 25) {
-                  //console.log(`array length = ${coorArray.length}`);
-                  for (let i = 0; i < coorArray.length; i += 2) {
-                    placeHolder.push(coorArray[i]);
-                  }
-                  coorArray = placeHolder;
-                  placeHolder = [];
-                }
-                //console.log(coorArray);
-                this.setState({ routeArray: coorArray });
-              })
-              .catch(function (error) {
-                console.log(error);
-              });
-          })
-          .catch(err => {
-            console.log(err);
-          });
-      });
-  }
-
-  getCoordinates (str) {
-    return axios.get(`https://api.openrouteservice.org/geocode/search?api_key=${ORS_KEY}&text=${str}`)
-      .then(res => {
-        //console.log('this should be an array', res.data.features[0].geometry.coordinates);
-        return res.data.features[0].geometry.coordinates;
+    axios.put('/coordstring', {lat: latitude, lng: longitude})
+      .then(result => {
+        this.setState({searchInput: result.data});
       })
       .catch(err => {
         console.log(err);
       });
   }
-
+  //displays at most 25 points between two locations
+  getRoute () {
+    const { startLocation, endLocation } = this.state;
+    axios.put('/route', {startLocation: startLocation, endLocation: endLocation})
+      .then(result => {
+        console.log(result.data);
+        this.setState({ routeArray: result.data });
+      })
+      .catch( err => {
+        console.log(err);
+      });
+  }
+  //get coordinates from city name, zoom in on coordinates
   primarySearch () {
     const { searchInput } = this.state;
     let searchedCoord;
-
-    axios.get(`https://api.openrouteservice.org/geocode/search?api_key=${ORS_KEY}&text=${searchInput}`)
+    axios.put('/getcoord', {str: searchInput})
       .then(res => {
-        //console.log('this should also be an array, \n', res.data.features[0].geometry.coordinates);
-        searchedCoord = res.data.features[0].geometry.coordinates;
-        //console.log('please don\'t be undefined', searchedCoord);
-        this.setState({ center: {lat: searchedCoord[1], lng: searchedCoord[0]}, zoom: 10 });
+        this.setState({ center: {lat: res.data[1], lng: res.data[0]}, zoom: 10 });
       })
       .catch(err => console.log(err));
   }
@@ -170,20 +123,19 @@ class App extends React.Component {
         <div style={{width: '50vw', height: '80vh'}}>
           <Map
             className="map"
-            googleMapURL={`https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places&key=${mapKey}`}
+            googleMapURL={`https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places&key`}
             loadingElement={<div style={{ height: '80%'}} />}
             containerElement={<div style={{ height: '80%'}} />}
             mapElement={<div style={{ height: '80%'}} />}
-            test={'Hi, Im a Map Test'}
             zoom={this.state.zoom}
             center={this.state.center}
             route={this.state.routeArray}
             reCenter={this.reCenter}
+            parks={this.state.parks}
           />
         </div>
         <Information
           className="information-class"
-          test={'Hi, Im an Information Test'}
           searchInput={searchInput}
           center={this.state.center}
         />

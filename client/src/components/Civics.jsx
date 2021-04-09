@@ -10,7 +10,7 @@ import React from 'react';
 import axios from 'axios';
 import Reps from './Reps.jsx';
 
-const { civics_key } = require('../../../server/config.js');
+//const { civics_key } = require('../../../server/config.js');
 
 class Civics extends React.Component {
   constructor(props) {
@@ -24,81 +24,17 @@ class Civics extends React.Component {
   }
 
   getCivicsInformation() {
-    //console.log('hello from get request');
-    const config = {
-      method: 'get',
-      url: `https://www.googleapis.com/civicinfo/v2/representatives?key=${civics_key}&address=${this.props.searchInput}`,
-      headers: { }
-    };
-
-    axios.request(config)
-      .then(res => {
-        //console.log(res);
-        const senatorObjs = [];
-        for (let i = 0; i < res.data.offices.length; i++) {
-          const index = res.data.offices[i];
-          let phoneNum = 'Not Found';
-          if (index.name === 'U.S. Senator') {
-            for (let j = 0; j < index.officialIndices.length; j++) {
-              if (res.data.officials[index.officialIndices[j]].phones) {
-                phoneNum = res.data.officials[index.officialIndices[j]].phones[0];
-              } else {
-                phoneNum = 'Not Found';
-              }
-              senatorObjs.push({
-                image: res.data.officials[index.officialIndices[j]].photoUrl,
-                name: res.data.officials[index.officialIndices[j]].name,
-                position: 'United States Senate',
-                party: res.data.officials[index.officialIndices[j]].party,
-                phone: phoneNum,
-              });
-            }
-          } else if (index.name === 'U.S. Representative') {
-            for (let h = 0; h < index.officialIndices.length; h++) {
-              if (res.data.officials[index.officialIndices[h]].phones) {
-                phoneNum = res.data.officials[index.officialIndices[h]].phones[0];
-              } else {
-                phoneNum = 'Not Found';
-              }
-              senatorObjs.push({
-                image: res.data.officials[index.officialIndices[h]].photoUrl,
-                name: res.data.officials[index.officialIndices[h]].name,
-                position: 'United States House of Representatives',
-                party: res.data.officials[index.officialIndices[h]].party,
-                phone: phoneNum,
-              });
-            }
-          } else if (index.name.includes('Mayor')) {
-            for (let k = 0; k < index.officialIndices.length; k++) {
-              if (res.data.officials[index.officialIndices[k]].phones) {
-                phoneNum = res.data.officials[index.officialIndices[k]].phones[0];
-              } else {
-                phoneNum = 'Not Found';
-              }
-              senatorObjs.push({
-                name: res.data.officials[index.officialIndices[k]].name,
-                position: 'Office of the Mayor',
-                party: res.data.officials[index.officialIndices[k]].party,
-                phone: phoneNum,
-              });
-            }
-          }
-        }
+    //console.log('hello from getCivicsInfo');
+    axios.put('/civic', {searchInput: this.props.searchInput})
+      .then(response => {
+        //console.log(response.data);
         this.setState({
-          senators: senatorObjs,
+          senators: response.data
         });
       })
       .catch(err => {
         console.log(err);
-      })
-      .catch(error => {
-        console.log(error);
       });
-  }
-
-
-  componentDidMount() {
-    this.getCivicsInformation();
   }
 
   render() {
