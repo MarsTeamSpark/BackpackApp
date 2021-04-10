@@ -17,15 +17,14 @@ class Auth extends React.Component {
       username: '',
       email: '',
       id: '',
-      message: ''
-
+      message: '',
     };
 
   }
 
   componentDidMount() {
     console.log('hello from auth');
-    console.log(this.props.logInInfo);
+    //console.log(this.props.logInInfo);
     return axios.get('/testing') //checks to see if user is logged in
       .then(data => {
         //console.log(data.data);
@@ -36,8 +35,12 @@ class Auth extends React.Component {
         }
       })
       .then(()=>{
-        //console.log('authstuff: ' + this.state.username);
-        this.props.logInInfo(this.state.isLoggedIn, this.state.username, this.state.email, this.state.id);
+        axios.get(`/couches/${this.state.id}`)
+          .then(data => {
+            //console.log(data.data);
+            this.props.logInInfo(this.state.isLoggedIn, this.state.username, this.state.email, this.state.id, data.data);
+            //this.setState({couches: data.data});
+          });
       })
       .catch(err =>{
         console.log(err);

@@ -18,7 +18,9 @@ const CouchSchema = new Schema({
   userId: {type: Number, required: true},
   name: {type: String},
   phone: {type: String},
-  address: {type: String}
+  address: {type: String},
+  lat: {type: Number},
+  long: {type: Number},
 });
 
 module.exports = {

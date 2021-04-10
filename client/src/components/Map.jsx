@@ -5,10 +5,12 @@ import { GoogleMap, withScriptjs, withGoogleMap, Marker, InfoWindow } from 'reac
 //getting started with render parks
 const WrapMe = function(props) {
   const [selectedPark, setSelectedPark] = useState(null);
+  const [selectedCouch, setSelectedCouch] = useState(null);
   // eslint-disable-next-line react/destructuring-assignment
   const parksData = props.parks;
   console.log('hello from maps');
   console.log(props.loggedIn, props.userName, props.email, props.id);
+  console.log(props.couches);
 
   return (
     <GoogleMap
@@ -64,6 +66,42 @@ const WrapMe = function(props) {
           }}
         />
       ))}
+      {props.couches.map((couch) => (
+        <Marker
+          key={couch._id}
+          position={{
+            lat: couch.lat,
+            lng: couch.long
+          }}
+          onClick={() => {
+            setSelectedCouch(couch);
+          }}
+          icon={{
+            url: '/assets/img/couch.svg',
+            //url: '/assets/img/tree.png',
+            // eslint-disable-next-line no-undef
+            scaledSize: new google.maps.Size(40, 40)
+          }}
+        />
+      ))}
+      {selectedCouch && (
+        <InfoWindow
+          position={{
+            lat: selectedCouch.lat,
+            lng: selectedCouch.long
+          }}
+          onCloseClick={() => {
+            setSelectedCouch(null);
+          }}
+        >
+          <div>
+            <h2>{selectedCouch.name}</h2>
+            <p>{selectedCouch.address}</p>
+            <p>{selectedCouch.phone}</p>
+          </div>
+        </InfoWindow>
+      )}
+
     </GoogleMap>
   );
 };

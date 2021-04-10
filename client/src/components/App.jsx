@@ -26,6 +26,7 @@ class App extends React.Component {
       user: '',
       email: '',
       userId: null,
+      couches: [],
     };
     // BIND YOUR METHODS
     this.getRoute = this.getRoute.bind(this);
@@ -40,8 +41,8 @@ class App extends React.Component {
   }
 
   //let us implement our couches
-  logInInfo(isLogged, name, mail, id) {
-    this.setState({isLoggedIn: isLogged, user: name, email: mail, userId: id });
+  logInInfo(isLogged, name, mail, id, sofas) {
+    this.setState({isLoggedIn: isLogged, user: name, email: mail, userId: id, couches: sofas });
   }
 
 
@@ -152,6 +153,7 @@ class App extends React.Component {
             userName={this.state.user}
             email={this.state.email}
             id={this.state.userId}
+            couches={this.state.couches}
           />
         </div>
       </div>

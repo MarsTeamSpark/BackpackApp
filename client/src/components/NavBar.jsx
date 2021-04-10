@@ -35,11 +35,6 @@ class NavBar extends React.Component {
     };
   }
 
-  componentDidMount() {
-    console.log('hello from navBar');
-    console.log(this.props.logInInfo);
-  }
-
 
   render() {
     return (
