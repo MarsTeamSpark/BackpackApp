@@ -10,7 +10,8 @@ import Information from './Information.jsx';
 import Map from './Map.jsx';
 import Navbar from './NavBar.jsx';
 import Input from './Input.jsx';
-//const { mapKey } = require('../../../server/config');
+import MyBackPack from './MyBackPack.jsx';
+// const { mapKey } = require('../../../server/config');
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -21,7 +22,12 @@ class App extends React.Component {
       zoom: 4,
       center: { lat: 37.0902, lng: -95.7129 },
       routeArray: [],
-      parks: []
+      parks: [],
+      isLoggedIn: false,
+      user: '',
+      email: '',
+      userId: null,
+      couches: [],
     };
     // extra little comment
     // BIND YOUR METHODS
@@ -33,7 +39,20 @@ class App extends React.Component {
     this.reCenter = this.reCenter.bind(this);
     this.coordinateToString = this.coordinateToString.bind(this);
     this.getNationalParks = this.getNationalParks.bind(this);
+    this.logInInfo = this.logInInfo.bind(this);
+    this.refresh = this.refresh.bind(this);
   }
+
+  //let us implement our couches
+  logInInfo(isLogged, name, mail, id, sofas) {
+    this.setState({isLoggedIn: isLogged, user: name, email: mail, userId: id, couches: sofas });
+  }
+
+  //not working
+  refresh() {
+    this.setState({});
+  }
+
   componentDidMount() {
     this.getNationalParks();
   }
@@ -111,7 +130,7 @@ class App extends React.Component {
       <div>
         {/* {console.log('From Route.jsx:', searchInput)} */}
         <div className="App"></div>
-        <Navbar/>
+        <Navbar logInInfo = { this.logInInfo }/>
         <br></br>
         <Input
           handleSearchChange={this.handleSearchChange}
@@ -137,7 +156,20 @@ class App extends React.Component {
             route={this.state.routeArray}
             reCenter={this.reCenter}
             parks={this.state.parks}
+            loggedIn={this.state.isLoggedIn}
+            userName={this.state.user}
+            email={this.state.email}
+            id={this.state.userId}
+            couches={this.state.couches}
           />
+          {this.state.isLoggedIn === true
+            ?
+            (<MyBackPack
+              userId={this.state.userId}
+              refresh={()=> { this.refresh(); }}
+            />)
+            : null
+          }
         </div>
       </div>
     );
@@ -145,3 +177,8 @@ class App extends React.Component {
 }
 
 export default App;
+
+// {a == true
+//   ? (<Button/>)
+//   : null
+//  }
