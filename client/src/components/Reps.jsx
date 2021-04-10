@@ -18,7 +18,7 @@ class Reps extends React.Component {
   render() {
     return (
       <div>
-        <h3>{this.props.name}</h3>
+        <h2>{this.props.name}</h2>
         {/* <img src={this.props.image} className="image-container"/> */}
         <div>Position: {this.props.position}</div>
         <div>Party: {this.props.party}</div>

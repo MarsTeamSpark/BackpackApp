@@ -46,7 +46,7 @@ class MyBackPack extends React.Component {
     return (
       <div>
         <form id="searchForm">
-          <p><h3>Know anybody with a spare couch? Enter their info</h3></p>
+          <h4>Know anybody with a spare couch?</h4>
           <input type="text" name="name" className="input" placeholder="Enter Name" onChange={this.handleNameChange}/>
           <input type="text" name="address" className="input" placeholder="Enter Address" onChange={this.handleAddressChange}/>
           <input type="text" name="phone" className="input" placeholder="Enter Phone Number" onChange={this.handlePhoneChange}/>

@@ -7,7 +7,9 @@ import styled from 'styled-components';
 import Auth from './Auth.jsx';
 
 const NavStyle = styled.div`
-  position: sticky;
+  border: rgba(25, 25, 25, 1);
+  border-radius: 25px;
+ 
   top: 0;
   width: 97.5vw;
   background:	#7bbcb6;
