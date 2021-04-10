@@ -10,6 +10,7 @@ import Information from './Information.jsx';
 import Map from './Map.jsx';
 import Navbar from './NavBar.jsx';
 import Input from './Input.jsx';
+import MyBackPack from './MyBackPack.jsx';
 const { mapKey } = require('../../../server/config');
 class App extends React.Component {
   constructor(props) {
@@ -22,9 +23,11 @@ class App extends React.Component {
       center: { lat: 37.0902, lng: -95.7129 },
       routeArray: [],
       parks: [],
-      dataObj: {
-
-      }
+      isLoggedIn: false,
+      user: '',
+      email: '',
+      userId: null,
+      couches: [],
     };
     // BIND YOUR METHODS
     this.getRoute = this.getRoute.bind(this);
@@ -35,8 +38,20 @@ class App extends React.Component {
     this.reCenter = this.reCenter.bind(this);
     this.coordinateToString = this.coordinateToString.bind(this);
     this.getNationalParks = this.getNationalParks.bind(this);
-    this.dataSender = this.dataSender.bind(this);
+    this.logInInfo = this.logInInfo.bind(this);
+    this.refresh = this.refresh.bind(this);
   }
+
+  //let us implement our couches
+  logInInfo(isLogged, name, mail, id, sofas) {
+    this.setState({isLoggedIn: isLogged, user: name, email: mail, userId: id, couches: sofas });
+  }
+
+  //not working
+  refresh() {
+    this.setState({});
+  }
+
   componentDidMount() {
     this.getNationalParks();
   }
@@ -100,11 +115,6 @@ class App extends React.Component {
   handleSearchChange (e) {
     this.setState({searchInput: e.target.value});
   }
-  dataSender(infoObj) {
-    this.setState({
-      dataObj: infoObj
-    });
-  }
 
 
   render() {
@@ -120,8 +130,7 @@ class App extends React.Component {
       <div>
         {/* {console.log('From Route.jsx:', searchInput)} */}
         <div className="App"></div>
-        <Navbar
-          dataSender = {this.dataSender}/>
+        <Navbar logInInfo = { this.logInInfo }/>
         <br></br>
         <Input
           handleSearchChange={this.handleSearchChange}
@@ -130,12 +139,22 @@ class App extends React.Component {
           handleEndChange = {this.handleEndChange}
           getRoute = {this.getRoute}
         />
+        <br></br>
         <Information
           className="information-class"
           searchInput={searchInput}
           center={this.state.center}
         />
-        <div style={{width: '90vw', height: '80vh'}}>
+        <div style={{width: '90vw', height: '100vh', right: '40' }}>
+          {this.state.isLoggedIn === true
+            ?
+            (<MyBackPack
+              userId={this.state.userId}
+              refresh={()=> { this.refresh(); }}
+            />)
+            : null
+          }
+          <br></br>
           <Map
             className="map"
             dataObj = {this.state.dataObj}
@@ -148,6 +167,11 @@ class App extends React.Component {
             route={this.state.routeArray}
             reCenter={this.reCenter}
             parks={this.state.parks}
+            loggedIn={this.state.isLoggedIn}
+            userName={this.state.user}
+            email={this.state.email}
+            id={this.state.userId}
+            couches={this.state.couches}
           />
         </div>
       </div>
@@ -156,3 +180,8 @@ class App extends React.Component {
 }
 
 export default App;
+
+// {a == true
+//   ? (<Button/>)
+//   : null
+//  }

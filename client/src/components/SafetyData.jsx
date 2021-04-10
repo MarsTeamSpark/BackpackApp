@@ -15,9 +15,9 @@ class SafetyData extends React.Component {
   render() {
     return (
       <div>
-        <div><h3>Restrictions:</h3> {this.props.restrictions}</div>
-        <div><h3>Covid Safety Index:</h3> {this.props.safetyIndex}</div>
-        <div><h3>Covid Risk:</h3> {this.props.risk}</div>
+        <div><h3>Covid Risk:</h3> <h5>{this.props.risk}</h5></div>
+        <div><h3>Covid Safety Index:</h3> <h5>{Math.round(this.props.safetyIndex)}/10</h5></div>
+        <div><h3>Restrictions:</h3> <h5>{this.props.restrictions}</h5></div>
       </div>
     );
   }

@@ -14,7 +14,7 @@ class Safety extends React.Component {
       safetyIndex: '',
       risk: ''
     };
-
+  
   }
 
   getSafetyData() {

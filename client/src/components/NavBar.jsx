@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 /* eslint-disable react/prop-types */
 /* eslint-disable react/destructuring-assignment */
 import React from 'react';
@@ -6,7 +7,9 @@ import styled from 'styled-components';
 import Auth from './Auth.jsx';
 
 const NavStyle = styled.div`
-  position: sticky;
+  border: rgba(25, 25, 25, 1);
+  border-radius: 25px;
+ 
   top: 0;
   width: 97.5vw;
   background:	#7bbcb6;
@@ -31,11 +34,8 @@ class NavBar extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-
     };
-
   }
-
 
 
   render() {
@@ -44,13 +44,12 @@ class NavBar extends React.Component {
         <LogoStyle>
           <h1>Back-Pack</h1>
           <br></br>
-         
-        
+
+
           <h3>We got your back!</h3>
         </LogoStyle>
         <div>
-          <Auth
-            dataSender = {this.props.dataSender}/>
+          <Auth logInInfo={ this.props.logInInfo }/>
         </div>
         <br></br>
       </NavStyle>

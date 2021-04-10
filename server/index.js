@@ -337,12 +337,21 @@ app.post('/adduser', (req, res) => {
 });
 
 app.post('/addcouch', (req, res) => {
-  Couches.insertMany([{
-    userId: req.body.userId,
-    name: req.body.name,
-    phone: req.body.phone,
-    address: req.body.address
-  }])
+  axios.get(`https://api.openrouteservice.org/geocode/search?api_key=${ORS_KEY}&text=${req.body.address}`)
+    .then(result => {
+      //console.log('this should be an array', res.data.features[0].geometry.coordinates);
+      //res.status(200).send();
+      const latitude = result.data.features[0].geometry.coordinates[1];
+      const longitude = result.data.features[0].geometry.coordinates[0];
+      Couches.insertMany([{
+        userId: req.body.userId,
+        name: req.body.name,
+        phone: req.body.phone,
+        address: req.body.address,
+        lat: latitude,
+        long: longitude,
+      }]);
+    })
     .then(res.send('couch added'))
     .catch(res.send('couch add failed'));
 });

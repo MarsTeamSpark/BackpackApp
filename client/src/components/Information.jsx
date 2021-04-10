@@ -12,11 +12,11 @@ import Civics from './Civics.jsx';
 const InfoBox = styled.div`
         transform: scale();
         border: 2px solid #44665c;
+        border-radius: 15px;
         text-align: left;
-        border-radius: 2px;
         padding: 40px;
         width: 25vw;
-        height: 25vw;
+        height: 27vw;
         overflow-x: hidden;
         overflow-y: scroll;
         box-shadow:1px 1px 1px 1px gray;
@@ -28,6 +28,7 @@ class Information extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+
     };
 
   }
