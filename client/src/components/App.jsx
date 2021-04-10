@@ -161,10 +161,14 @@ class App extends React.Component {
             id={this.state.userId}
             couches={this.state.couches}
           />
-          <MyBackPack
-            userId={this.state.userId}
-            refresh={()=> { this.refresh(); }}
-          />
+          {this.state.isLoggedIn === true
+            ?
+            (<MyBackPack
+              userId={this.state.userId}
+              refresh={()=> { this.refresh(); }}
+            />)
+            : null
+          }
         </div>
       </div>
     );
@@ -172,3 +176,8 @@ class App extends React.Component {
 }
 
 export default App;
+
+// {a == true
+//   ? (<Button/>)
+//   : null
+//  }
