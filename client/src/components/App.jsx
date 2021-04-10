@@ -21,7 +21,11 @@ class App extends React.Component {
       zoom: 4,
       center: { lat: 37.0902, lng: -95.7129 },
       routeArray: [],
-      parks: []
+      parks: [],
+      isLoggedIn: false,
+      user: '',
+      email: '',
+      userId: null,
     };
     // BIND YOUR METHODS
     this.getRoute = this.getRoute.bind(this);
@@ -32,9 +36,14 @@ class App extends React.Component {
     this.reCenter = this.reCenter.bind(this);
     this.coordinateToString = this.coordinateToString.bind(this);
     this.getNationalParks = this.getNationalParks.bind(this);
+    this.logInInfo = this.logInInfo.bind(this);
   }
 
   //let us implement our couches
+  logInInfo(isLogged, name, mail, id) {
+    this.setState({isLoggedIn: isLogged, user: name, email: mail, userId: id });
+  }
+
 
   componentDidMount() {
     this.getNationalParks();
@@ -113,7 +122,7 @@ class App extends React.Component {
       <div>
         {/* {console.log('From Route.jsx:', searchInput)} */}
         <div className="App"></div>
-        <Navbar/>
+        <Navbar logInInfo = { this.logInInfo }/>
         <br></br>
         <Input
           handleSearchChange={this.handleSearchChange}
@@ -139,6 +148,10 @@ class App extends React.Component {
             route={this.state.routeArray}
             reCenter={this.reCenter}
             parks={this.state.parks}
+            loggedIn={this.state.isLoggedIn}
+            userName={this.state.user}
+            email={this.state.email}
+            id={this.state.userId}
           />
         </div>
       </div>

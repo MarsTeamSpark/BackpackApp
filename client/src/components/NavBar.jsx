@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 /* eslint-disable react/prop-types */
 /* eslint-disable react/destructuring-assignment */
 import React from 'react';
@@ -31,11 +32,13 @@ class NavBar extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-
     };
-
   }
 
+  componentDidMount() {
+    console.log('hello from navBar');
+    console.log(this.props.logInInfo);
+  }
 
 
   render() {
@@ -44,12 +47,12 @@ class NavBar extends React.Component {
         <LogoStyle>
           <h1>Back-Pack</h1>
           <br></br>
-         
-        
+
+
           <h3>We got your back!</h3>
         </LogoStyle>
         <div>
-          <Auth/>
+          <Auth logInInfo={ this.props.logInInfo }/>
         </div>
         <br></br>
       </NavStyle>
