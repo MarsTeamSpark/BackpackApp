@@ -21,7 +21,10 @@ class App extends React.Component {
       zoom: 4,
       center: { lat: 37.0902, lng: -95.7129 },
       routeArray: [],
-      parks: []
+      parks: [],
+      dataObj: {
+
+      }
     };
     // BIND YOUR METHODS
     this.getRoute = this.getRoute.bind(this);
@@ -32,6 +35,7 @@ class App extends React.Component {
     this.reCenter = this.reCenter.bind(this);
     this.coordinateToString = this.coordinateToString.bind(this);
     this.getNationalParks = this.getNationalParks.bind(this);
+    this.dataSender = this.dataSender.bind(this);
   }
   componentDidMount() {
     this.getNationalParks();
@@ -96,6 +100,12 @@ class App extends React.Component {
   handleSearchChange (e) {
     this.setState({searchInput: e.target.value});
   }
+  dataSender(infoObj) {
+    this.setState({
+      dataObj: infoObj
+    });
+  }
+
 
   render() {
     const getRoute = this.getRoute;
@@ -110,7 +120,8 @@ class App extends React.Component {
       <div>
         {/* {console.log('From Route.jsx:', searchInput)} */}
         <div className="App"></div>
-        <Navbar/>
+        <Navbar
+          dataSender = {this.dataSender}/>
         <br></br>
         <Input
           handleSearchChange={this.handleSearchChange}
@@ -127,6 +138,7 @@ class App extends React.Component {
         <div style={{width: '90vw', height: '80vh'}}>
           <Map
             className="map"
+            dataObj = {this.state.dataObj}
             googleMapURL={`https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places&key=${mapKey}`}
             loadingElement={<div style={{ height: '80%'}} />}
             containerElement={<div style={{ height: '80%'}} />}

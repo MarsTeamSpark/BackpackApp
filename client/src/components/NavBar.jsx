@@ -49,7 +49,8 @@ class NavBar extends React.Component {
           <h3>We got your back!</h3>
         </LogoStyle>
         <div>
-          <Auth/>
+          <Auth
+            dataSender = {this.props.dataSender}/>
         </div>
         <br></br>
       </NavStyle>

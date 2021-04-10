@@ -37,11 +37,20 @@ class Auth extends React.Component {
         console.log(err);
       });
   }
+  componentDidUpdate() {
+    this.props.dataSender({
+      isLoggedIn: this.state.isLoggedIn,
+      username: this.state.username,
+      email: this.state.email,
+      id: this.state.id,
+      message: this.state.message
+    });
+  }
 
   render() {
     return (
       <AuthStyle>
-        <div>
+        <div >
           <h3>{this.state.message} {this.state.username}</h3>
           <h2>{this.state.credentials}</h2>
         </div>
