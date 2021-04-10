@@ -116,6 +116,7 @@ class App extends React.Component {
     this.setState({searchInput: e.target.value});
   }
 
+
   render() {
     const getRoute = this.getRoute;
     const handleEndChange = this.handleEndChange;
@@ -138,14 +139,25 @@ class App extends React.Component {
           handleEndChange = {this.handleEndChange}
           getRoute = {this.getRoute}
         />
+        <br></br>
         <Information
           className="information-class"
           searchInput={searchInput}
           center={this.state.center}
         />
-        <div style={{width: '90vw', height: '80vh'}}>
+        <div style={{width: '90vw', height: '100vh', right: '40' }}>
+          {this.state.isLoggedIn === true
+            ?
+            (<MyBackPack
+              userId={this.state.userId}
+              refresh={()=> { this.refresh(); }}
+            />)
+            : null
+          }
+          <br></br>
           <Map
             className="map"
+            dataObj = {this.state.dataObj}
             googleMapURL={`https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places&key=${mapKey}`}
             loadingElement={<div style={{ height: '80%'}} />}
             containerElement={<div style={{ height: '80%'}} />}
@@ -161,14 +173,6 @@ class App extends React.Component {
             id={this.state.userId}
             couches={this.state.couches}
           />
-          {this.state.isLoggedIn === true
-            ?
-            (<MyBackPack
-              userId={this.state.userId}
-              refresh={()=> { this.refresh(); }}
-            />)
-            : null
-          }
         </div>
       </div>
     );

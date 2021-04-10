@@ -1,6 +1,7 @@
 /* eslint-disable react/destructuring-assignment */
 /* eslint-disable react/prop-types */
 /* eslint-disable no-console */
+
 import React from 'react';
 import axios from 'axios';
 import styled from 'styled-components';
@@ -47,10 +48,11 @@ class Auth extends React.Component {
       });
   }
 
+
   render() {
     return (
       <AuthStyle>
-        <div>
+        <div >
           <h3>{this.state.message} {this.state.username}</h3>
           <h2>{this.state.credentials}</h2>
         </div>

@@ -4,7 +4,8 @@ export default createGlobalStyle`
     body {
         /* background: linear-gradient(35deg, rgba(56,127,117, 1) 0%, rgba(123,188,182, 1) 35%, rgba(152,228,217, 1) 100%); */
         background-color: rgb(56,127,117);
-        font-family: "Lucida Console", "Courier New", monospace;
+        /* font-family: "Lucida Console", "Courier New", monospace; */
+        font-family: 'Open Sans', sans-serif;
 
     }
     img{
@@ -31,18 +32,29 @@ export default createGlobalStyle`
         align-items: center;
         background-color: rgba(152,228,217);
         border-color: rgb(56,127,117);
-        border-radius: 10px;
-        .image-container {
-            width:100px;
-            height:100px;
-            object-fit:scale-down;
-        }
+        border: 2px;
+        border-radius: 25px;
+        /* border-radius: 10px; */
     }
     h1 {
         float: left;
+        font-family: "Lucida Console", "Courier New", monospace;
     }
     h2 {
+        font-family: "Lucida Console", "Courier New", monospace; 
         
+        
+    }
+    h3{
+        font-weight:normal;
+       
+    }
+    h4{
+        font-family: "Lucida Console", "Courier New", monospace; 
+    }
+    h5 {
+        font-weight: normal;
+        font-style: italic;
     }
 
 
