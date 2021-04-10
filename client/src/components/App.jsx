@@ -10,6 +10,7 @@ import Information from './Information.jsx';
 import Map from './Map.jsx';
 import Navbar from './NavBar.jsx';
 import Input from './Input.jsx';
+import MyBackPack from './MyBackPack.jsx';
 const { mapKey } = require('../../../server/config');
 class App extends React.Component {
   constructor(props) {
@@ -38,6 +39,7 @@ class App extends React.Component {
     this.coordinateToString = this.coordinateToString.bind(this);
     this.getNationalParks = this.getNationalParks.bind(this);
     this.logInInfo = this.logInInfo.bind(this);
+    this.refresh = this.refresh.bind(this);
   }
 
   //let us implement our couches
@@ -45,6 +47,10 @@ class App extends React.Component {
     this.setState({isLoggedIn: isLogged, user: name, email: mail, userId: id, couches: sofas });
   }
 
+  //not working
+  refresh() {
+    this.setState({});
+  }
 
   componentDidMount() {
     this.getNationalParks();
@@ -154,6 +160,10 @@ class App extends React.Component {
             email={this.state.email}
             id={this.state.userId}
             couches={this.state.couches}
+          />
+          <MyBackPack
+            userId={this.state.userId}
+            refresh={()=> { this.refresh(); }}
           />
         </div>
       </div>
