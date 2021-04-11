@@ -12,10 +12,6 @@ const WrapMe = function(props) {
   const [selectedStateParks, setSelectedStateParks] = useState(null);
   // eslint-disable-next-line react/destructuring-assignment
   const parksData = props.parks;
-  console.log('hello from maps');
-  console.log(props.loggedIn, props.userName, props.email, props.id);
-  console.log(props.couches);
-
   return (
     <GoogleMap
       // eslint-disable-next-line react/destructuring-assignment

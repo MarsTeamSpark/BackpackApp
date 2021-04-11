@@ -17,8 +17,6 @@ class MyBackPack extends React.Component {
     this.add = this.add.bind(this);
   }
   componentDidMount() {
-    console.log('hello from mybackpack');
-    console.log(this.props.refresh);
   }
   handleNameChange(e) {
     this.setState({name: e.target.value});
@@ -34,7 +32,6 @@ class MyBackPack extends React.Component {
 
   add() {
     const { name, address, phone } = this.state;
-    console.log(name, address, phone, this.props.userId);
     axios.post('/addcouch', {userId: this.props.userId, name: name, phone: phone, address: address})
       .then(results=> {
         console.log(results);

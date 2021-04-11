@@ -3,8 +3,6 @@ const parks = require('./assets/data/nationalparksdata.json');
 const { Users, Couches } = require('./db.js');
 const axios = require('axios');
 require('dotenv').config();
-//console.log(process.env.GOOGLE_CLIENT_ID);
-//console.log(process.env.civics_key);
 const ORS_KEY = process.env.ORS_KEY;
 const CIVICS_KEY = process.env.civics_key;
 const rapidApiKey = process.env.rapidApiKey;
@@ -254,7 +252,6 @@ app.put('/walk', (req, res) => {
       lat: req.body.lat,
       address: 'https://api.walkscore.com/score',
       wsapikey: walkScoreKey,
-      transit: '1',
       bike: '1',
       format: 'json'
     },
@@ -273,22 +270,31 @@ app.put('/walk', (req, res) => {
     });
 });
 
+//get air quality stats for given coordinates
+app.put('/air', (req, res) => {
+  const options = {
+    method: 'GET',
+    url: 'https://us-air-quality-by-lat-long.p.rapidapi.com/getairqualitylatlong',
+    params: {
+      lat: req.body.lat,
+      long: req.body.lng,
+    },
+    headers: {
+      'x-rapidapi-key': rapidApiKey,
+      'x-rapidapi-host': 'us-air-quality-by-lat-long.p.rapidapi.com'
+    }
+  };
+
+  axios.request(options).then((response) => {
+    console.log(response.data);
+    res.send(response.data);
+  }).catch((error) => {
+    res.send(error);
+  });
+});
+
 // get hostel info from google places api
 app.put('/hostel', (req, res) => {
-  // const options = { 
-  //   method: 'GET',
-  //   url: 'https://maps.googleapis.com/maps/api/place/nearbysearch',
-  //   params: {
-  //     //location needs to be lat, long
-  //     location: req.body.coord,
-  //     radius: 1500,
-  //     type: 'hostel',
-  //     keyword: 'hostel',
-  //     key: placesApiKey,
-  //     format: 'json'
-  //   },
-  //   headers: { },
-  // };
 
   axios.get(`https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${req.body.coord}&radius=30000&type=hostel&keyword=hostel&key=${placesApiKey}`)
     .then(response => {
