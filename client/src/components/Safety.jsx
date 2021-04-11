@@ -18,8 +18,6 @@ class Safety extends React.Component {
   }
 
   getSafetyData() {
-    //const { searchInput } = this.props;
-    console.log('hello from getSafetyData');
     axios.put('/covid', {searchInput: this.props.searchInput }).then((response) => {
       //console.log(response.data);
       this.setState({

@@ -1,8 +1,6 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable react/destructuring-assignment */
 import React from 'react';
-// import PropTypes from 'prop-types';
-// import ReactDOM from 'react-dom';
 
 class SafetyData extends React.Component {
   constructor(props) {

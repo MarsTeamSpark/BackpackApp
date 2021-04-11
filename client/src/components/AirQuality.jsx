@@ -1,25 +1,19 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable no-console */
 import React from 'react';
-// import PropTypes from 'prop-types';
-// import ReactDOM from 'react-dom';
 import axios from 'axios';
-//const { rapidApiKey, walkScoreKey } = require('../../../server/config.js');
-
 class AirQuality extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      quality: '',
-      airCode: '',
+      quality: null,
+      airCode: null,
       airDescription: ''
     };
-    //this.getAirQuality = this.getAirQuality.bind(this);
+    this.getAirQuality = this.getAirQuality.bind(this);
   }
 
   getAirQuality() {
-    console.log('hello from airQualityScore!!!');
-    console.log(this.props.center);
     axios.put('/air', this.props.center).then((response) => {
       this.setState({
         quality: response.data.AirQualityIndex,
@@ -32,17 +26,13 @@ class AirQuality extends React.Component {
       });
   }
 
-  // componentDidMount() {
-  //   this.getSafetyData();
-  // }
-
   render() {
     return (
       <div >
         <div className="Safety"> <h2>Air Quality:</h2> </div>
-        <div><h3>Air Quality Index:</h3> {this.state.quality}</div>
-        <div><h3>Air Quality Code:</h3> {this.state.airCode}</div>
-        <div><h3>Air Quality:</h3> {this.state.airDescription}</div>
+        <div><h3>Air Quality Index:</h3> <h5>{this.state.quality}</h5></div>
+        <div><h3>Air Quality Code:</h3> <h5>{this.state.airCode}</h5></div>
+        <div><h3>Air Quality:</h3> <h5>{this.state.airDescription}</h5></div>
         <br></br>
         <button onClick={() => this.getAirQuality()}>Get AirQuality</button>
       </div>
