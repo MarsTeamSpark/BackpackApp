@@ -30,6 +30,8 @@ class App extends React.Component {
       userId: null,
       couches: [],
       hostels: [],
+      dispensary: [],
+      stateParks: []
     };
     // extra little comment
     // BIND YOUR METHODS
@@ -44,6 +46,8 @@ class App extends React.Component {
     this.logInInfo = this.logInInfo.bind(this);
     this.refresh = this.refresh.bind(this);
     this.getHostels = this.getHostels.bind(this);
+    this.getDispensary = this.getDispensary.bind(this);
+    this.getStateParks = this.getStateParks.bind(this);
   }
 
   //let us implement our couches
@@ -119,6 +123,29 @@ class App extends React.Component {
 
   }
 
+  getDispensary () {
+    //use the center's lat and long to find nearby hostels
+    const { center } = this.state;
+    axios.put('/dispensary', {coord: `${center.lat},${center.lng}`})
+      .then(res => {
+        console.log(res.data);
+        this.setState({ dispensary: res.data.results });
+      })
+      .catch(err => console.log(err));
+
+  }
+
+  getStateParks () {
+    //use the center's lat and long to find nearby hostels
+    const { center } = this.state;
+    axios.put('/stateParks', {coord: `${center.lat},${center.lng}`})
+      .then(res => {
+        console.log(res.data);
+        this.setState({ stateParks: res.data.results });
+      })
+      .catch(err => console.log(err));
+
+  }
 
   handleStartChange (e) {
     this.setState({startLocation: e.target.value});
@@ -163,6 +190,8 @@ class App extends React.Component {
         />
         <Places 
           getHostels={this.getHostels}
+          getDispensary={this.getDispensary}
+          getStateParks={this.getStateParks}
         />
         <div style={{width: '90vw', height: '100vh', right: '40' }}>
           {this.state.isLoggedIn === true
@@ -192,6 +221,8 @@ class App extends React.Component {
             id={this.state.userId}
             couches={this.state.couches}
             hostels={this.state.hostels}
+            dispensary={this.state.dispensary}
+            stateParks={this.state.stateParks}
           />
         </div>
       </div>

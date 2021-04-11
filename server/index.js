@@ -300,6 +300,27 @@ app.put('/hostel', (req, res) => {
     });
 });
 
+app.put('/dispensary', (req, res) => {
+  axios.get(`https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${req.body.coord}&radius=30000&type=dispensary&keyword=dispensary&key=${placesApiKey}`)
+    .then(response => {
+      console.log(response);
+      res.send(response.data);
+    })
+    .catch(err => {
+      res.send(err);
+    });
+});
+
+app.put('/stateParks', (req, res) => {
+  axios.get(`https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${req.body.coord}&radius=30000&keyword=campgrounds&key=${placesApiKey}`)
+    .then(response => {
+      console.log(response);
+      res.send(response.data);
+    })
+    .catch(err => {
+      res.send(err);
+    });
+});
 
 /*************************
  ******* DATABASE ********

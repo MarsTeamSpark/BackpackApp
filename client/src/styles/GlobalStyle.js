@@ -9,9 +9,9 @@ export default createGlobalStyle`
 
     }
     img{
-        width: 100%;
+        width: 15%;
         height: auto;
-        display: block;
+        display: inline-block;
     }
     button{
         outline: none;

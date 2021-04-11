@@ -16,8 +16,11 @@ class Places extends React.Component {
   render () {
     return (
       <div>
-        <button onClick={this.props.getHostels}>Get Nearby Hostels</button>
-        <button>Get Nearby Dispensaries</button>
+        <tr>
+          <td><img src={'/assets/img/home.png'} onClick={this.props.getHostels}></img></td>
+          <td><img src={'/assets/img/green_cross.png'} onClick={this.props.getDispensary}></img></td>
+          <td><img src={'/assets/img/tent2.png'} onClick={this.props.getStateParks}></img></td>
+        </tr>
       </div>
     );
   }
