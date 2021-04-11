@@ -5,14 +5,12 @@
 /* eslint-disable react/destructuring-assignment */
 import React from 'react';
 import axios from 'axios';
-//const { ORS_KEY } = require('../../../server/config.js');
 import Information from './Information.jsx';
 import Map from './Map.jsx';
 import Navbar from './NavBar.jsx';
 import Input from './Input.jsx';
 import MyBackPack from './MyBackPack.jsx';
 import Places from './Places.jsx';
-// const { mapKey } = require('../../../server/config');
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -116,7 +114,6 @@ class App extends React.Component {
     const { center } = this.state;
     axios.put('/hostel', {coord: `${center.lat},${center.lng}`})
       .then(res => {
-        console.log(res.data);
         this.setState({ hostels: res.data.results });
       })
       .catch(err => console.log(err));
@@ -128,7 +125,6 @@ class App extends React.Component {
     const { center } = this.state;
     axios.put('/dispensary', {coord: `${center.lat},${center.lng}`})
       .then(res => {
-        console.log(res.data);
         this.setState({ dispensary: res.data.results });
       })
       .catch(err => console.log(err));
@@ -140,7 +136,6 @@ class App extends React.Component {
     const { center } = this.state;
     axios.put('/stateParks', {coord: `${center.lat},${center.lng}`})
       .then(res => {
-        console.log(res.data);
         this.setState({ stateParks: res.data.results });
       })
       .catch(err => console.log(err));
@@ -161,17 +156,10 @@ class App extends React.Component {
 
 
   render() {
-    const getRoute = this.getRoute;
-    const handleEndChange = this.handleEndChange;
-    const handleStartChange = this.handleStartChange;
-    const handleSearchChange = this.handleSearchChange;
-    const primarySearch = this.primarySearch;
-
     const { searchInput } = this.state;
 
     return (
       <div>
-        {/* {console.log('From Route.jsx:', searchInput)} */}
         <div className="App"></div>
         <Navbar logInInfo = { this.logInInfo }/>
         <br></br>
@@ -206,7 +194,7 @@ class App extends React.Component {
           <Map
             className="map"
             dataObj = {this.state.dataObj}
-            googleMapURL={`https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places&key`}
+            googleMapURL={`https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places&key=AIzaSyDMnx1I_jgujEwriR21D9FjUVQceJyKUmc`}
             loadingElement={<div style={{ height: '80%'}} />}
             containerElement={<div style={{ height: '80%'}} />}
             mapElement={<div style={{ height: '80%'}} />}

@@ -3,13 +3,11 @@ const parks = require('./assets/data/nationalparksdata.json');
 const { Users, Couches } = require('./db.js');
 const axios = require('axios');
 require('dotenv').config();
-//console.log(process.env.GOOGLE_CLIENT_ID);
-//console.log(process.env.civics_key);
 const ORS_KEY = process.env.ORS_KEY;
 const CIVICS_KEY = process.env.civics_key;
 const rapidApiKey = process.env.rapidApiKey;
 const walkScoreKey = process.env.WALKSCORE_KEY;
-//const placesApiKey = process.env.PLACES_API_KEY;
+const placesApiKey = process.env.PLACES_API_KEY;
 const path = require('path');
 const express = require('express');
 const passport = require('passport');
@@ -293,6 +291,41 @@ app.put('/air', (req, res) => {
   }).catch((error) => {
     res.send(error);
   });
+});
+
+// get hostel info from google places api
+app.put('/hostel', (req, res) => {
+
+  axios.get(`https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${req.body.coord}&radius=30000&type=hostel&keyword=hostel&key=${placesApiKey}`)
+    .then(response => {
+      console.log(response);
+      res.send(response.data);
+    })
+    .catch(err => {
+      res.send(err);
+    });
+});
+
+app.put('/dispensary', (req, res) => {
+  axios.get(`https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${req.body.coord}&radius=30000&type=dispensary&keyword=dispensary&key=${placesApiKey}`)
+    .then(response => {
+      console.log(response);
+      res.send(response.data);
+    })
+    .catch(err => {
+      res.send(err);
+    });
+});
+
+app.put('/stateParks', (req, res) => {
+  axios.get(`https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${req.body.coord}&radius=30000&keyword=campgrounds&key=${placesApiKey}`)
+    .then(response => {
+      console.log(response);
+      res.send(response.data);
+    })
+    .catch(err => {
+      res.send(err);
+    });
 });
 
 /*************************
