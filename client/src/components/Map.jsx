@@ -84,6 +84,15 @@ const WrapMe = function(props) {
           }}
         />
       ))}
+      {props.hostels.map(hostel => (
+        <Marker
+          key={hostel.place_id}
+          position={{
+            lat: hostel.geometry.location.lat,
+            lng: hostel.geometry.location.lng
+          }}
+        />
+      ))}
       {selectedCouch && (
         <InfoWindow
           position={{

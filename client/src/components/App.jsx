@@ -11,6 +11,7 @@ import Map from './Map.jsx';
 import Navbar from './NavBar.jsx';
 import Input from './Input.jsx';
 import MyBackPack from './MyBackPack.jsx';
+import Places from './Places.jsx';
 // const { mapKey } = require('../../../server/config');
 class App extends React.Component {
   constructor(props) {
@@ -28,6 +29,7 @@ class App extends React.Component {
       email: '',
       userId: null,
       couches: [],
+      hostels: [],
     };
     // extra little comment
     // BIND YOUR METHODS
@@ -41,6 +43,7 @@ class App extends React.Component {
     this.getNationalParks = this.getNationalParks.bind(this);
     this.logInInfo = this.logInInfo.bind(this);
     this.refresh = this.refresh.bind(this);
+    this.getHostels = this.getHostels.bind(this);
   }
 
   //let us implement our couches
@@ -104,6 +107,18 @@ class App extends React.Component {
       .catch(err => console.log(err));
   }
 
+  getHostels () {
+    //use the center's lat and long to find nearby hostels
+    const { center } = this.state;
+    axios.put('/hostel', {coord: `${center.lat},${center.lng}`})
+      .then(res => {
+        console.log(res.data);
+        this.setState({ hostels: res.data.results });
+      })
+      .catch(err => console.log(err));
+
+  }
+
 
   handleStartChange (e) {
     this.setState({startLocation: e.target.value});
@@ -146,6 +161,9 @@ class App extends React.Component {
           searchInput={searchInput}
           center={this.state.center}
         />
+        <Places 
+          getHostels={this.getHostels}
+        />
         <div style={{width: '90vw', height: '100vh', right: '40' }}>
           {this.state.isLoggedIn === true
             ?
@@ -173,6 +191,7 @@ class App extends React.Component {
             email={this.state.email}
             id={this.state.userId}
             couches={this.state.couches}
+            hostels={this.state.hostels}
           />
         </div>
       </div>
