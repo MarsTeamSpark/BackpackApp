@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "start": "nodemon server",
-    "dev": "webpack --mode=development",
+    "dev": "webpack --mode development",
+    "devStart": "npm run dev && npm start",
+    "devStart2": "webpack --mode=development && nodemon server",
     "lint": "eslint . --ext .js --ext .jsx",
     "lint:fix": "eslint . --fix --ext .js --ext .jsx"
   },
@@ -34,7 +36,6 @@
     "babel-loader": "^8.2.2",
     "babel-preset-es2015": "^6.24.1",
     "babel-register": "^6.26.0",
-    "clean-webpack-plugin": "^3.0.0",
     "eslint": "^7.23.0",
     "eslint-config-standard": "^16.0.2",
     "eslint-plugin-promise": "^4.3.1",
