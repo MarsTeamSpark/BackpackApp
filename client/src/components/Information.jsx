@@ -7,6 +7,7 @@ import styled from 'styled-components';
 
 import Safety from './Safety.jsx';
 import WalkScore from './WalkScore.jsx';
+import AirQuality from './AirQuality.jsx';
 import Civics from './Civics.jsx';
 
 const InfoBox = styled.div`
@@ -40,6 +41,11 @@ class Information extends React.Component {
           />
           <br></br>
           <WalkScore
+            center={this.props.center}
+            searchInput={this.props.searchInput}
+          />
+          <br></br>
+          <AirQuality
             center={this.props.center}
             searchInput={this.props.searchInput}
           />

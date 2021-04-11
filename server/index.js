@@ -272,6 +272,60 @@ app.put('/walk', (req, res) => {
     });
 });
 
+//get air quality stats for given coordinates
+app.put('/air', (req, res) => {
+  // const options = {
+  //   method: 'GET',
+  //   url: 'https://us-air-quality-by-lat-long.p.rapidapi.com/getairqualitylatlong',
+  //   params: {lat: '37.7749', long: '-122.4194'},
+  //   headers: {
+  //     'x-rapidapi-key': 'f4f80cf7cbmsh002b13e4d6e9f90p1b63a3jsn548583f7666b',
+  //     'x-rapidapi-host': 'us-air-quality-by-lat-long.p.rapidapi.com'
+  //   }
+  // };
+  const options = {
+    method: 'GET',
+    url: 'https://us-air-quality-by-lat-long.p.rapidapi.com/getairqualitylatlong',
+    params: {
+      lat: req.body.lat,
+      lon: req.body.long,
+    },
+    headers: {
+      'x-rapidapi-key': rapidApiKey,
+      'x-rapidapi-host': 'us-air-quality-by-lat-long.p.rapidapi.com'
+    }
+  };
+
+  axios.request(options).then((response) => {
+    console.log(response.data);
+    res.send(response.data);
+  }).catch((error) => {
+    res.send(error);
+  });
+});
+
+// //get wikipedia blurb
+// app.put('/wiki', (req, res) => {
+//   const options = {
+//     method: 'GET',
+//     url: 'https://us-air-quality-by-lat-long.p.rapidapi.com/getairqualitylatlong',
+//     params: {
+//       lat: req.body.lat,
+//       lon: req.body.lng,
+//     },
+//     headers: {
+//       'x-rapidapi-key': rapidApiKey,
+//       'x-rapidapi-host': 'us-air-quality-by-lat-long.p.rapidapi.com'
+//     }
+//   };
+
+//   axios.request(options).then((response) => {
+//     console.log(response.data);
+//     res.send(response.data);
+//   }).catch((error) => {
+//     res.send(error);
+//   });
+// });
 
 /*************************
  ******* DATABASE ********

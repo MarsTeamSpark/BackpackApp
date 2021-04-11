@@ -12,12 +12,9 @@ class WalkScore extends React.Component {
     this.state = {
       walkScore: null,
       walkDescription: '',
-      transitScore: null,
-      transitDescription: '',
       bikeScore: null,
       bikeDescription: ''
     };
-
   }
 
   getWalkScore() {
@@ -28,8 +25,6 @@ class WalkScore extends React.Component {
       this.setState({
         walkScore: response.data.walkscore,
         walkDescription: response.data.description,
-        transitScore: response.data.transit.score,
-        transitDescription: response.data.transit.description,
         bikeScore: response.data.bike.score,
         bikeDescription: response.data.bike.description
       });
@@ -49,8 +44,6 @@ class WalkScore extends React.Component {
         <div className="Safety"> <h2>Walkability:</h2> </div>
         <div><h3>Walk Score:</h3> {this.state.walkScore}</div>
         <div><h3>Walk Description:</h3> {this.state.walkDescription}</div>
-        <div><h3>Transit Score:</h3> {this.state.transitScore}</div>
-        <div><h3>Transit Description:</h3> {this.state.transitDescription}</div>
         <div><h3>Bike Score:</h3> {this.state.bikeScore}</div>
         <div><h3>Bike Description:</h3> {this.state.bikeDescription}</div>
         <br></br>
