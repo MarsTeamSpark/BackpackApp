@@ -24,7 +24,8 @@ And then follow the provided link to your browser of choice.
 
 # API KEYS:
 
-Change config.example.js to config.js. Config.js is already git ignored.
+Change .env.example to .env. 
+.env is already git ignored.
 This file will store your API keys.
 You can find API keys at the following links:
 
@@ -40,8 +41,15 @@ https://rapidapi.com/kerloom/api/safe-travel-covid-index
 walkScoreKey:
 https://rapidapi.com/theapiguy/api/walk-score
 
-REACT_APP_GOOGLE_KEY:
+PLACES_API_KEY:
+https://developers.google.com/maps/documentation/places/web-service/overview
+
+Note:
+The map will render with a "Developer Purposes Only" watermark until a Google api key is provided on line 197 in App.jsx.
+You can get the key here:
 https://developers.google.com/maps/documentation/javascript/get-api-key
+We recommend leaving the watermark on during development, and hard coding the api key during deployment.
+Making sure that the api key is restricted to your IP.
 
 # OpenRouteService API
 
