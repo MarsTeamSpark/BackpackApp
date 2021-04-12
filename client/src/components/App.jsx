@@ -194,7 +194,7 @@ class App extends React.Component {
           <Map
             className="map"
             dataObj = {this.state.dataObj}
-            googleMapURL={`https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places&key=AIzaSyDMnx1I_jgujEwriR21D9FjUVQceJyKUmc`}
+            googleMapURL={`https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places&key`}
             loadingElement={<div style={{ height: '80%'}} />}
             containerElement={<div style={{ height: '80%'}} />}
             mapElement={<div style={{ height: '80%'}} />}
